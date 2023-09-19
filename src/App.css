@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+/* App.css */
+
+header {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+
+#APIResponse {
+  font-weight: bolder;
+  font-size: larger;
+}
