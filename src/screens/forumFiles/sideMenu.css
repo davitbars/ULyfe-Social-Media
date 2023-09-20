@@ -1,0 +1,36 @@
+/* CSS for the SideMenu component */
+.side-menu {
+    padding-top: 30px;
+    width: 30%;
+    /* Set the width to 25% of the screen */
+    padding-left: 30px;
+    /* Your other styling for the side menu container */
+    border: 1px solid black;
+}
+
+.category-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.catetgory :active{
+    width: 30%;
+}
+
+.category-title {
+    /* Your styling for the category title */
+}
+
+.arrow {
+    /* Your styling for the arrow icon */
+    font-size: 18px;
+    margin-right: 0px;
+}
+
+/* Additional styling for the subcategory list, if needed */
+.subcategory-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 0 10px;
+}

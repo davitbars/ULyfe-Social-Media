@@ -1,25 +1,29 @@
 import './App.css';
-import Header from './header';
-import React, { useState, useEffect } from 'react';
+import Header from './components/header';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Account from './screens/account'; 
+import Dating from './screens/dating';
+import Forum from './screens/forumFiles/forum';
+import Events from './screens/events';
+
 
 function App() {
-  const [apiData, setApiData] = useState({});
-
-  useEffect(() => {
-    fetch('http://localhost:5000/api/hello') 
-      .then((response) => response.json())
-      .then((data) => setApiData(data));
-  }, []);
-  
-
   return (
-    <div className="App">
+    <Router>
       <Header />
-      <main>
-        <p>Welcome to our starter site!</p>
-        <p id="APIResponse">API Response: {apiData.message}</p>
-      </main>
-    </div>
+      <Routes>
+        <Route path="/screens">
+          <Route index element={<Account />} />
+          <Route path="account" element={<Account />} />
+          <Route path="dating" element={<Dating />} />
+          <Route path="forum" element={<Forum />} />
+          <Route path="events" element={<Events />} />
+        </Route>
+      </Routes>
+
+    </Router>
+    
   );
 }
 
