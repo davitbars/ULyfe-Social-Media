@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Dating.module.css";
-import davitImage from "./dav.jpeg";
-import hovsepImage from "./hos.jpeg";
+import davitImage from "../images/dav.jpeg";
+import hovsepImage from "../images/hos.jpeg";
 
 const users = [
   { id: 1, name: "Davit", image: davitImage },

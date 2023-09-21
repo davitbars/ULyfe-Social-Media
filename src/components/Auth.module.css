@@ -50,7 +50,7 @@ label {
   font-size: 0.9em;
 }
 
-input {
+.inputBox {
   width: 100%;
   padding: 12px 10px;
   margin-bottom: 1.5em;
@@ -59,12 +59,12 @@ input {
   transition: border 0.2s;
 }
 
-input:focus {
+.inputBox:focus {
   border: 1px solid #0557fa;
   outline: none;
 }
 
-button {
+.login {
   width: 100%;
   background-color: #0557fa;
   color: white;
@@ -77,11 +77,11 @@ button {
   font-weight: 600;
 }
 
-button:hover {
+.login:hover {
   background-color: #0342c0;
   transform: translateY(-1px);
 }
 
-button + button {
+.login + .login {
   margin-top: 15px;
 }

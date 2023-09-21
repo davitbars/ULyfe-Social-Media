@@ -34,7 +34,8 @@ const Auth = ({ onAuth }) => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-          />
+            className={styles.inputBox}
+            />
         </div>
         <div>
           <label>Password:</label>
@@ -42,7 +43,8 @@ const Auth = ({ onAuth }) => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-          />
+            className={styles.inputBox}
+            />
         </div>
         {!isLogin && (
           <div>
@@ -51,15 +53,19 @@ const Auth = ({ onAuth }) => {
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
+              className={styles.inputBox}
+
             />
           </div>
         )}
-        <button onClick={handleAuthAttempt}>
+        <button className={styles.login} onClick={handleAuthAttempt}>
           {isLogin ? "Login" : "Signup"}
         </button>
-        <button onClick={() => setIsLogin(!isLogin)}>
+        <button className={styles.login} onClick={() => setIsLogin(!isLogin)}>
           Switch to {isLogin ? "Signup" : "Login"}
         </button>
+
+
       </div>
     </div>
   );
