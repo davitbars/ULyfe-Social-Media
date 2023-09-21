@@ -1,20 +1,18 @@
-import React from 'react';
-import SideMenu from './sideMenu';
+import React from "react";
+import SideMenu from "./sideMenu";
+import "./forum.css";
+import SecondaryHeader from "./SecondaryHeader";
 
 function Forum() {
   // Forum component code
 
   return (
     <div className="forum">
-      {/* Side menu component */}
+      <SecondaryHeader />
       <div className="side-menu">
         <SideMenu />
       </div>
-
-      {/* Forum content */}
-      <div className="forum-content">
-        {/* ... Forum content JSX ... */}
-      </div>
+      <div className="forum-content"></div>
     </div>
   );
 }

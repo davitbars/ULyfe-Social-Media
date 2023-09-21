@@ -1,24 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import "./sideMenu.css";
 
 function SideMenu() {
   const [categories, setCategories] = useState([
     {
-      name: 'Professors',
-      subcategories: ['Professor 1', 'Professor 2', 'Professor 3'],
+      name: "Professors",
+      subcategories: ["Professor 1", "Professor 2", "Professor 3"],
       isOpen: false,
     },
     {
-      name: 'Classes',
-      subcategories: ['Class 1', 'Class 2', 'Class 3'],
+      name: "Classes",
+      subcategories: ["Class 1", "Class 2", "Class 3"],
       isOpen: false,
     },
     {
-      name: 'Majors',
-      subcategories: ['Major 1', 'Major 2', 'Major 3'],
+      name: "Majors",
+      subcategories: ["Major 1", "Major 2", "Major 3"],
       isOpen: false,
     },
-    // ... Other categories
+    {
+      name: "Clubs",
+      subcategories: ["Club 1", "Club 2", "Club 3"],
+      isOpen: false,
+    },
+    {
+      name: "Restaurants",
+      subcategories: ["Restaurant 1", "Restaurant 2", "Restaurant 3"],
+      isOpen: false,
+    },
+    {
+      name: "Frats/Sororities",
+      subcategories: ["Frat/Sorority 1", "Frat/Sorority 2", "Frat/Sorority 3"],
+      isOpen: false,
+    },
   ]);
 
   const handleCategoryClick = (index) => {
@@ -37,13 +51,17 @@ function SideMenu() {
   return (
     <div className="side-menu-box">
       {categories.map((category, index) => (
-        <div key={index} className={`category ${category.isOpen ? 'active' : ''}`}>
-          <div className="category-content" onClick={() => handleCategoryClick(index)}>
-            <div className="category-title">
-              {category.name}
-            </div>
-            <span className={`arrow ${category.isOpen ? 'up' : 'down'}`}>
-              {category.isOpen ? '▲' : '▼'}
+        <div
+          key={index}
+          className={`category ${category.isOpen ? "active" : ""}`}
+        >
+          <div
+            className="category-content"
+            onClick={() => handleCategoryClick(index)}
+          >
+            <div className="category-title">{category.name}</div>
+            <span className={`arrow ${category.isOpen ? "up" : "down"}`}>
+              {category.isOpen ? "▲" : "▼"}
             </span>
           </div>
           {category.isOpen && (

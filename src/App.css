@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,18 +40,22 @@
 /* App.css */
 
 header {
-  background-color: #333;
-  color: white;
+  background-color: white;
+  color: #0557fa;
   text-align: center;
-  padding: 1rem;
+  padding: 5px;
+}
+
+header h1 {
+  margin: 8px;
 }
 
 #APIResponse {
   font-weight: bolder;
   font-size: larger;
-} 
+}
 
-nav ul{
+nav ul {
   margin: 0;
   padding: 0;
 }
@@ -59,11 +63,11 @@ nav ul{
 nav ul li {
   list-style-type: none;
   display: inline-block;
-  padding: 5px 20px;
+  padding: 0 20px;
 }
 
 nav ul li a {
   text-decoration: none;
-  color: white;
+  color: #0557fa;
   font-size: larger;
 }

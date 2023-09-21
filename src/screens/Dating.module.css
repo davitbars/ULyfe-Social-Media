@@ -1,0 +1,111 @@
+.datingContainer {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f8fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.datingTitle {
+  font-size: 2em;
+  color: #0557fa;
+  margin-bottom: 25px;
+  font-weight: bold;
+  text-transform: uppercase; /* gives a more professional touch */
+  letter-spacing: 1px; /* slight spacing between letters for a cleaner look */
+}
+
+.profile {
+  background-color: #fff;
+  width: 320px;
+  max-width: 85vw;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* softer shadow for modern touch */
+  margin-bottom: 25px;
+  transition: transform 0.2s, box-shadow 0.2s; /* smooth transition for hovering effect */
+}
+
+.profile:hover {
+  transform: translateY(-5px); /* slight upwards movement on hover */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); /* increased shadow depth on hover */
+}
+
+.profile img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+}
+
+.profile-info {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-info p {
+  font-size: 1.2em;
+  margin: 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.bton {
+  background: transparent;
+  border: none;
+  padding: 0 10px; /* slight padding for better spacing */
+  font-size: 2em;
+  cursor: pointer;
+  outline: none;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.btonContainer {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 5px 0; /* added padding for better visual spacing */
+}
+
+.superlike {
+  color: #00bcd4; /* Cyan color as an example */
+}
+
+.superlike:hover {
+  color: #008ba3; /* Darker cyan */
+}
+
+.reverse {
+  color: #ffeb3b; /* Yellow color as an example */
+}
+
+.reverse:hover {
+  color: #b2a429; /* Darker yellow */
+}
+.bton.dislike {
+  color: #4caf50;
+}
+
+.bton.dislike:hover {
+  color: #134214;
+}
+
+.bton.like {
+  color: #da5656;
+}
+
+.bton.like:hover {
+  color: #a81e1e;
+}
+.bton:hover {
+  transform: scale(1.1); /* slightly enlarges the button */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); /* adds a subtle shadow */
+}
+
+.bton:active {
+  transform: scale(0.95); /* slightly shrinks the button for a press effect */
+  box-shadow: none; /* removes the shadow when button is clicked */
+}
