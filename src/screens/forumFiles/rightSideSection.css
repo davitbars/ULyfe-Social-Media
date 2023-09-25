@@ -1,0 +1,31 @@
+.right-side-section-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    /* Grey background */
+    border-radius: 10px;
+    /* Rounded border */
+    border: 2px solid #0073e6;
+    /* Border color (blue) */
+    padding: 10px;
+    height: 70vh;
+}
+
+.trending-talks {
+    margin-bottom: 30px;
+    border: 2px solid #0073e6;
+    border-radius: 10px;
+}
+
+.trending-talks ul{
+    list-style-type: none;
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.advertisement {
+    align-self: flex-end;
+    margin-top: auto;
+    width: 100%;
+}

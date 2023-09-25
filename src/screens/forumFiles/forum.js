@@ -1,20 +1,35 @@
+// forum.js
+
 import React from "react";
 import SideMenu from "./sideMenu";
 import "./forum.css";
 import SecondaryHeader from "./SecondaryHeader";
+import ForumFeed from "./forumFeed";
+import RightSideSection from "./rightSideSection";
 
 function Forum() {
-  // Forum component code
-
   return (
     <div className="forum">
+      {/* Secondary Header */}
       <SecondaryHeader />
-      <div className="side-menu">
-        <SideMenu />
+
+      {/* Main Content */}
+      <div className="forum-main-content">
+        <div className="side-menu">
+          <SideMenu />
+        </div>
+        <div className="forum-content">
+          <ForumFeed />
+        </div>
+
+        {/* Right Side Section */}
+        <div className="right-side-section">
+          <RightSideSection />
+        </div>
       </div>
-      <div className="forum-content"></div>
     </div>
   );
 }
 
 export default Forum;
+

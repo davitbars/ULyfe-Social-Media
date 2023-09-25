@@ -1,3 +1,42 @@
 .forum {
   background-color: white;
+  overflow: hidden;
+  /* Prevent the entire page from scrolling */
+}
+
+.forum-main-content {
+  display: flex;
+  /* Use Flexbox for two-column layout */
+}
+
+.side-menu {
+  flex: 0 0 15%;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.forum-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: scroll;
+  /* Make only the forum content scrollable */
+  scrollbar-width: thin;
+  /* Thin scrollbar */
+  scrollbar-color: #ccc transparent;
+  /* Scrollbar color */
+  padding-top: 0;
+}
+
+/* Customize the appearance of the scrollbar thumb */
+.forum-content::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  /* Scrollbar thumb color */
+  border-radius: 10px;
+  /* Rounded scrollbar thumb */
+}
+
+/* Customize the appearance of the scrollbar track */
+.forum-content::-webkit-scrollbar-track {
+  background-color: transparent;
+  /* Scrollbar track color */
 }

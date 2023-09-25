@@ -1,0 +1,38 @@
+/* ForumFeed.css */
+
+.forum-feed {
+    overflow-y: scroll;
+    /* Enable vertical scrolling */
+    max-height: calc(100vh - 200px);
+    /* Adjust the max height as needed */
+    padding: 20px;
+    /* Add padding around the feed */
+}
+
+.forum-post {
+    border: 1px solid #ddd;
+    /* Border for each post */
+    padding: 10px;
+    /* Add padding to each post */
+    margin-bottom: 20px;
+    /* Spacing between posts */
+}
+
+.post-title {
+    font-weight: bold;
+    /* Title in bold */
+}
+
+.post-content {
+    margin-top: 10px;
+    /* Margin between title and content */
+}
+
+.post-image {
+    max-width: 100%;
+    /* Ensure images fit within post container */
+    display: block;
+    /* Remove extra space below images */
+    margin-top: 10px;
+    /* Margin between content and image */
+}
