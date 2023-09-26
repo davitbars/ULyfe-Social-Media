@@ -3,9 +3,9 @@ import Header from "./components/header";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Account from "./screens/account";
-import Dating from "./screens/dating";
+import Dating from "./screens/datingFiles/dating";
 import Forum from "./screens/forumFiles/forum";
-import Events from "./screens/events";
+import Events from "./screens/eventsFiles/events";
 import Auth from "./components/auth";
 
 function App() {

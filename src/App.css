@@ -6,7 +6,7 @@ body {
   overflow: hidden;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   display: none;
 }
 
@@ -40,22 +40,10 @@ body {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
-}
-
-/* App.css */
-
-header {
-  background-color: white;
-  color: #0557fa;
-  text-align: center;
-  padding: 5px;
-}
-
-header h1 {
-  margin: 8px;
 }
 
 #APIResponse {
@@ -63,14 +51,36 @@ header h1 {
   font-size: larger;
 }
 
+header {
+  background-color: white;
+  color: #0557fa;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+}
+
+/* Styles for the left section (logo and page options) */
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  max-width: 240px;
+  /* Set the maximum width of your logo */
+  margin-right: 20px;
+  /* Adjust the margin as needed */
+}
+
 nav ul {
   margin: 0;
   padding: 0;
+  list-style: none;
+  display: flex;
 }
 
 nav ul li {
-  list-style-type: none;
-  display: inline-block;
   padding: 0 20px;
 }
 
@@ -78,4 +88,30 @@ nav ul li a {
   text-decoration: none;
   color: #0557fa;
   font-size: larger;
+}
+
+/* Styles for the right section (account button) */
+.header-right {
+  position: relative;
+}
+
+.account-button {
+  width: 40px;
+  /* Adjust the width and height for the circular button */
+  height: 40px;
+  background-color: #0557fa;
+  /* Button background color */
+  border-radius: 50%;
+  /* Make it circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Add styles for the user photo (optional) */
+.account-button img {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 50%;
 }

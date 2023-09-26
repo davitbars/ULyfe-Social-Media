@@ -1,5 +1,3 @@
-// forum.js
-
 import React from "react";
 import SideMenu from "./sideMenu";
 import "./forum.css";

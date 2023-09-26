@@ -1,0 +1,22 @@
+.event-side-menu {
+    background-color: #f0f0f0;
+    padding: 20px;
+    height: 100vh;
+}
+
+.filter-category {
+    margin-bottom: 20px;
+}
+
+.filter-category h3 {
+    font-weight: bold;
+}
+
+.filter-category ul {
+    list-style: none;
+    padding: 0;
+}
+
+.filter-category li {
+    margin: 5px 0;
+}

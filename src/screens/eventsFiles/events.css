@@ -1,0 +1,11 @@
+.events-page {
+    display: flex;
+    align-items: flex-start;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* Add any additional styles as needed */
