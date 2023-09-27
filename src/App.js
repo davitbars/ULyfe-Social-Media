@@ -9,7 +9,7 @@ import Events from "./screens/eventsFiles/events";
 import Auth from "./components/auth";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const handleAuth = (email, password) => {
     if (email.endsWith(".edu")) {

@@ -2,6 +2,7 @@
     width: 30%;
     height: 90vh;
     overflow-y: auto;
+    min-width: 300px;
 }
 
 .event-card {
@@ -19,8 +20,8 @@
 }
 
 .event-thumbnail img {
-    max-width: 100px;
-    max-height: 100px;
+    width: 100px;
+    height: 100px;
     object-fit: cover;
     margin-right: 10px;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './events.css';
 import EventSideMenu from './EventSideMenu';
 import EventCard from './EventCard';
@@ -126,9 +126,13 @@ const eventData = [
   },
 ];
 
-
 function Events() {
   const [selectedEvent, setSelectedEvent] = React.useState(null);
+
+  // Initialize selectedEvent with the first event when the component mounts
+  useEffect(() => {
+    setSelectedEvent(eventData[0]);
+  }, []);
 
   const handleEventClick = (event) => {
     setSelectedEvent(event);
