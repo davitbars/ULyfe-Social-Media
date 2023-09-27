@@ -16,6 +16,12 @@ function ForumFeed() {
       content: 'Nulla facilisi. Etiam convallis odio in bibendum.',
       imageUrl: 'https://via.placeholder.com/150',
     },
+    {
+      id: 3,
+      title: 'Post Title 3',
+      content: 'Nulla facilisi. Etiam convallis odio in bibendum.',
+      imageUrl: 'https://via.placeholder.com/150',
+    },
     // Add more posts as needed
   ];
 

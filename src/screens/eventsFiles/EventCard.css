@@ -1,0 +1,39 @@
+.events-container {
+    width: 30%;
+    height: 90vh;
+    overflow-y: auto;
+}
+
+.event-card {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 0px;
+    padding: 10px;
+    background-color: white;
+}
+
+.event-card:hover {
+    border: 3px solid #0557fa;
+    background-color: #b5ceff;
+}
+
+.event-thumbnail img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.event-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.event-date,
+.event-price,
+.event-location {
+    margin: 0;
+    color: #555;
+}

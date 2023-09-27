@@ -25,13 +25,12 @@ function App() {
     return <Auth onAuth={handleAuth} />;
   }
 
-  // If authenticated, return your main Router
   return (
     <Router>
       <Header />
       <Routes>
         <Route path="/screens">
-          <Route index element={<Account />} />
+          <Route index element={<Forum />} />
           <Route path="account" element={<Account />} />
           <Route path="dating" element={<Dating />} />
           <Route path="forum" element={<Forum />} />

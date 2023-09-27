@@ -17,7 +17,7 @@ function Header() {
               <Link to="/screens/forum">Forum</Link>
             </li>
             <li>
-              <Link to="/screens/dating">Dating</Link>
+              <Link to="/screens/dating">Lynk</Link>
             </li>
             <li>
               <Link to="/screens/events">Events</Link>
