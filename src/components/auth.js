@@ -1,13 +1,20 @@
 import styles from "./Auth.module.css";
 import React, { useState } from "react";
-import {firebase} from '../firebase'; // Use the relative path to the firebase.js file
-
+// import { auth } from "../firebase"; // Import the Auth instance from firebase.js
+import {
+  auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "../firebase"; // Import from your firebase.js file, assuming it's located one directory up
+import { useNavigate } from "react-router-dom";
 
 const Auth = ({ onAuth }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleAuthAttempt = async () => {
     // First, check if the email is a .edu email.
@@ -24,22 +31,35 @@ const Auth = ({ onAuth }) => {
 
     try {
       if (isLogin) {
+        console.log("Attempting login with", email, password); // Debugging line
+
         // Login with Firebase
-        await firebase.auth().signInWithEmailAndPassword(email, password);
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        console.log("Firebase response:", userCredential);
+        navigate("/screens/forum"); // Navigate immediately
       } else {
         // Sign up with Firebase
-        const userCredential = await firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
 
         // Send email verification
-        await userCredential.user.sendEmailVerification();
+        await sendEmailVerification(userCredential.user);
 
         alert("Account created! Please check your email for verification.");
+        navigate("/screens/forum"); // Navigate immediately
       }
 
       // Authentication successful, call the onAuth callback
-      onAuth(email, password);
+      if (typeof onAuth === "function") {
+        onAuth();
+      }
     } catch (error) {
       console.error("Authentication error:", error.message);
       alert(`Authentication error: ${error.message}`);

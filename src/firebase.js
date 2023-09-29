@@ -1,16 +1,31 @@
 import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyByFJk4QL_tvIFRea3vSmi4OyFiGmHrd4w",
-    authDomain: "lyfe-14ae2.firebaseapp.com",
-    projectId: "lyfe-14ae2",
-    storageBucket: "lyfe-14ae2.appspot.com",
-    messagingSenderId: "131409686663",
-    appId: "1:131409686663:web:04c0f927cb5642e2c20822"
+  apiKey: "AIzaSyByFJk4QL_tvIFRea3vSmi4OyFiGmHrd4w",
+  authDomain: "lyfe-14ae2.firebaseapp.com",
+  projectId: "lyfe-14ae2",
+  storageBucket: "lyfe-14ae2.appspot.com",
+  messagingSenderId: "131409686663",
+  appId: "1:131409686663:web:04c0f927cb5642e2c20822",
+  measurementId: "G-VD3ZZ5K69D",
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
-const firebase = getFirestore(firebaseApp);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-export {firebase};
+export {
+  auth,
+  db,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+};
