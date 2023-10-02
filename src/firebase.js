@@ -6,6 +6,7 @@ import {
   sendEmailVerification,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyByFJk4QL_tvIFRea3vSmi4OyFiGmHrd4w",
@@ -21,8 +22,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 export {
+  storage,
   auth,
   db,
   signInWithEmailAndPassword,

@@ -1,6 +1,7 @@
 import React from "react";
 import "./SecondaryHeader.css";
 import ForumLogo from "../../images/ForumLogo2.png";
+import { Link } from "react-router-dom";
 
 function SecondaryHeader() {
   return (
@@ -13,6 +14,9 @@ function SecondaryHeader() {
       <div className="search-bar">
         <input type="text" placeholder="Search Forums"></input>
       </div>
+      <Link to="/createpost" className="create-post-button">
+        Create New Post
+      </Link>
       <button className="my-chats-button">My Chats</button>
     </div>
   );

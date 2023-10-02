@@ -20,6 +20,8 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "./firebase"; // Assuming firebase.js is in the same directory as App.js
+import CreatePost from "./screens/forumFiles/CreatePost";
+
 
 // Create a context to share the user state across components
 export const UserContext = createContext(null);
@@ -32,6 +34,7 @@ function App() {
           <Route path="/" element={<AuthManager />} />
           <Route path="auth" element={<Auth />} />
           <Route path="screens/*" element={<ScreensRoutes />} />
+          <Route path="createpost" element={<CreatePost />} /> 
         </Routes>
       </UserContext.Provider>
     </Router>
@@ -125,6 +128,7 @@ function ScreensRoutes() {
         <Route path="dating" element={<Dating />} />
         <Route path="forum" element={<Forum />} />
         <Route path="events" element={<Events />} />
+
       </Routes>
     </div>
   );
