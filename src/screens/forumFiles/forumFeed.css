@@ -29,10 +29,15 @@
 }
 
 .post-image {
-    max-width: 100%;
-    /* Ensure images fit within post container */
+    max-height: 250px;
     display: block;
-    /* Remove extra space below images */
     margin-top: 10px;
-    /* Margin between content and image */
+    border: 1px solid grey;
+}
+
+.images-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow: scroll;
 }

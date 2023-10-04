@@ -1,0 +1,67 @@
+.secondary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: white;
+    width: 100%;
+    /* border-top: 2px solid #0557fa; */
+}
+
+.Forumlogo {
+    width: 130px;
+    height: auto;
+}
+
+.search-bar {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.search-bar input {
+    border-radius: 10px;
+    padding: 7px;
+    font-size: 17px;
+    width: 80%;
+    border: thin solid #0557fa;
+    background-color: white;
+}
+
+.search-bar input::placeholder {
+    color: #0557fa;
+    font-weight: 100;
+}
+
+/* Style for the input when it is focused (clicked) */
+.search-bar input:focus {
+    border-color: #0557fa;
+    color: #0557fa;
+    outline: none;
+}
+
+.my-events-button {
+    background-color: #0557fa;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-right: 5px;
+    border: 2px solid #0557fa;
+    font-size: medium;
+
+}
+
+.create-post-button {
+    background-color: #0557fa;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-right: 30px;
+    border: 2px solid #0557fa;
+    text-decoration: none;
+    font-size: medium;
+}
+
+.create-post-button:hover,
+.my-events-button:hover {
+    border: 2px solid black;
+}

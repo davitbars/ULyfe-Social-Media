@@ -1,24 +1,35 @@
 import React, { useState } from "react";
-import "./CreatePost.css"; // Import the CSS file for styling
-import { addForumPost } from "../../firebaseFunctions"; // Import your Firebase function
+import "./CreatePost.css";
+import { addForumPost } from "../../firebaseFunctions";
+import { useNavigate } from "react-router-dom";
+import { FaRegArrowAltCircleLeft } from "react-icons/fa";
 
-const CreatePost = () => {
+const CreatePost = ({ onCancel }) => {
   const [formData, setFormData] = useState({
     forumTitle: "",
     description: "",
-    images: [],
     tags: "",
   });
 
+  const [images, setImages] = useState([]);
+  const navigate = useNavigate();
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-    if (name === "images") {
-      // Handle file input for images
-      const selectedImages = Array.from(e.target.files);
-      setFormData({ ...formData, images: selectedImages });
+  const handleImageChange = (e) => {
+    const selectedImages = Array.from(e.target.files);
+    setImages(selectedImages);
+  };
+
+  const handleBackClick = () => {
+    if (onCancel) {
+      onCancel();
     } else {
-      setFormData({ ...formData, [name]: value });
+      navigate("/screens/forum"); // Navigate back to the forum feed
     }
   };
 
@@ -29,18 +40,36 @@ const CreatePost = () => {
     const userId = "your-user-id";
 
     try {
+      // Ensure required fields are filled out
+      if (!formData.forumTitle || !formData.description) {
+        // Display an error message or handle it as you prefer
+        console.error("Forum Title and Description are required.");
+        return;
+      }
+
       // Call the addForumPost function to add the post to the database
-      const postId = await addForumPost(userId, formData);
+      const postId = await addForumPost(userId, {
+        forumTitle: formData.forumTitle,
+        description: formData.description,
+        tags: formData.tags,
+        images: images, // Include the selected images
+      });
 
       // Reset the form fields after successful submission
       setFormData({
         forumTitle: "",
         description: "",
-        images: [],
         tags: "",
       });
+      setImages([]); // Clear selected images
 
-      console.log(`Forum post added with ID: ${postId}`);
+      // Show a success notification
+      setShowSuccessNotification(true);
+
+      // Automatically return to the forum feed after a delay (e.g., 3 seconds)
+      setTimeout(() => {
+        handleBackClick();
+      }, 3000);
     } catch (error) {
       console.error("Error adding forum post: ", error);
     }
@@ -48,6 +77,9 @@ const CreatePost = () => {
 
   return (
     <div className="create-post-container">
+      <button onClick={handleBackClick} className="back-button">
+        <FaRegArrowAltCircleLeft />
+      </button>
       <h2>Create New Post</h2>
       <form onSubmit={handleSubmit}>
         <div className="input-group">
@@ -58,6 +90,7 @@ const CreatePost = () => {
             value={formData.forumTitle}
             onChange={handleChange}
             className="input-field"
+            required // This field is required
           />
         </div>
         <div className="input-group">
@@ -67,6 +100,7 @@ const CreatePost = () => {
             value={formData.description}
             onChange={handleChange}
             className="input-field"
+            required // This field is required
           />
         </div>
         <div className="input-group">
@@ -75,7 +109,7 @@ const CreatePost = () => {
             type="file"
             name="images"
             multiple
-            onChange={handleChange}
+            onChange={handleImageChange}
             className="input-field"
           />
         </div>
@@ -93,6 +127,12 @@ const CreatePost = () => {
           Create Post
         </button>
       </form>
+
+      {showSuccessNotification && (
+        <div className="success-notification">
+          Post created successfully. Redirecting...
+        </div>
+      )}
     </div>
   );
 };

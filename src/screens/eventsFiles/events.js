@@ -3,6 +3,7 @@ import './events.css';
 import EventSideMenu from './EventSideMenu';
 import EventCard from './EventCard';
 import EventDetails from './EventDetails';
+import SecondaryHeader from './SecondaryHeader';
 
 const eventData = [
   {
@@ -144,6 +145,8 @@ function Events() {
 
   return (
     <div className="events-page">
+            <SecondaryHeader />
+
       <EventSideMenu />
       <div className="events-container">
         {eventData.map((event) => (

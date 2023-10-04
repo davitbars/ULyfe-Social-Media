@@ -2,8 +2,10 @@ import React from "react";
 import "./SecondaryHeader.css";
 import ForumLogo from "../../images/ForumLogo2.png";
 import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 
-function SecondaryHeader() {
+
+function SecondaryHeader({ onCreatePostClick }) {
   return (
     <div className="secondary-header">
       <link
@@ -14,11 +16,10 @@ function SecondaryHeader() {
       <div className="search-bar">
         <input type="text" placeholder="Search Forums"></input>
       </div>
-      <Link to="/createpost" className="create-post-button">
-        Create New Post
-      </Link>
       <button className="my-chats-button">My Chats</button>
-    </div>
+      <Link to="#" className="create-post-button" onClick={onCreatePostClick}>
+        <FaPlus />
+      </Link>    </div>
   );
 }
 
