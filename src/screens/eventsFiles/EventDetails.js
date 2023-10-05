@@ -5,12 +5,12 @@ import './EventDetails.css';
 function EventDetails({ event, onClose }) {
   const [showImageOverlay, setShowImageOverlay] = useState(false);
 
-  const images = event.images.map((image, index) => ({
+  const images = event ? event.images.map((image, index) => ({
     original: image,
     thumbnail: image,
     originalWidth: 200,
     originalHeight: 200,
-  }));
+  })) : [];
 
   const openImageOverlay = () => {
     setShowImageOverlay(true);
@@ -19,6 +19,10 @@ function EventDetails({ event, onClose }) {
   const closeImageOverlay = () => {
     setShowImageOverlay(false);
   };
+
+  if (!event) {
+    return null;
+  }
   
   return (
     <div className="event-details-container">
@@ -28,7 +32,7 @@ function EventDetails({ event, onClose }) {
 
       <div className='data-box'>
         <p className='eventDate'>Date: {event.date}</p>
-        <p className='eventPrice'>Price: {event.price}</p>
+        <p className='eventPrice'>Price: ${event.price}</p>
         <p className='eventLocation'>Location: {event.location}</p>
         <p className='eventDescription'>Description: {event.description}</p>
       </div>

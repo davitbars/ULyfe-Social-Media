@@ -50,7 +50,7 @@
 
 }
 
-.create-post-button {
+.create-event-button {
     background-color: #0557fa;
     color: white;
     padding: 10px;
@@ -61,7 +61,7 @@
     font-size: medium;
 }
 
-.create-post-button:hover,
+.create-event-button:hover,
 .my-events-button:hover {
     border: 2px solid black;
 }

@@ -15,10 +15,8 @@ function Forum() {
 
   return (
     <div className="forum">
-      {/* Secondary Header */}
       <SecondaryHeader onCreatePostClick={handleCreatePostClick} />
 
-      {/* Main Content */}
       <div className="forum-main-content">
         <div className="side-menu">
           <SideMenu />
