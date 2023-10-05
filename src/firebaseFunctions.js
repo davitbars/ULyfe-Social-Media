@@ -10,7 +10,10 @@ export const addForumPost = async (userId, postData) => {
     // Upload images to Firebase Storage and get their download URLs
     const imageUrls = [];
     for (const imageFile of postData.images) {
-      const storageRef = ref(storage, `forumImages/${userId}/${imageFile.name}`);
+      const storageRef = ref(
+        storage,
+        `forumImages/${userId}/${imageFile.name}`
+      );
       await uploadString(storageRef, imageFile);
       const imageUrl = await getDownloadURL(storageRef);
       imageUrls.push(imageUrl);

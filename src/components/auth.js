@@ -1,68 +1,92 @@
+import React, { useState, useEffect } from "react";
 import styles from "./Auth.module.css";
-import React, { useState } from "react";
-// import { auth } from "../firebase"; // Import the Auth instance from firebase.js
 import {
   auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendEmailVerification,
-} from "../firebase"; // Import from your firebase.js file, assuming it's located one directory up
+  onAuthStateChanged,
+} from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../firebase";
 
-const Auth = ({ onAuth }) => {
+const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (newUser) => {
+      if (newUser && newUser.emailVerified) {
+        // Check if additional info is already filled
+        const userInfo = await getUserInfoFromFirestore(newUser.uid);
+        if (userInfo && Object.keys(userInfo).length > 0) {
+          navigate("/screens/forum");
+        } else {
+          navigate("/screens/additional-info");
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
+
+  const getUserInfoFromFirestore = async (uid) => {
+    try {
+      const userRef = doc(db, "users", uid);
+      console.log(`Fetching data for path: users/${uid}`);
+
+      const userDoc = await getDoc(userRef);
+      console.log(userDoc.data());
+      if (userDoc.exists()) {
+        console.log("Manually fetched data:", userDoc.data());
+      } else {
+        console.error("Manual fetch failed.");
+      }
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        console.log("User data fetched:", userData);
+        return userData;
+      } else {
+        console.log("No additional info found for user:", uid);
+
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching user data: ", error);
+      return null;
+    }
+  };
+
   const handleAuthAttempt = async () => {
-    // First, check if the email is a .edu email.
     if (!email.endsWith(".edu")) {
-      alert("Please use a student email ending with .edu");
-      return; // Stop further execution if this check fails
+      alert("Please use a student email");
+      return;
     }
 
-    // Then, if it's a sign-up attempt, check the password confirmation.
     if (!isLogin && password !== confirmPassword) {
       alert("Passwords do not match!");
-      return; // Stop further execution if this check fails
+      return;
     }
-
     try {
       if (isLogin) {
-        console.log("Attempting login with", email, password); // Debugging line
-
-        // Login with Firebase
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        console.log("Firebase response:", userCredential);
-        navigate("/screens/forum"); // Navigate immediately
+        await signInWithEmailAndPassword(auth, email, password);
       } else {
-        // Sign up with Firebase
         const userCredential = await createUserWithEmailAndPassword(
           auth,
           email,
           password
         );
-
-        // Send email verification
         await sendEmailVerification(userCredential.user);
-
-        alert("Account created! Please check your email for verification.");
-        navigate("/screens/forum"); // Navigate immediately
-      }
-
-      // Authentication successful, call the onAuth callback
-      if (typeof onAuth === "function") {
-        onAuth();
+        alert("Verification email sent. Please check your inbox.");
       }
     } catch (error) {
       console.error("Authentication error:", error.message);
-      alert(`Authentication error: ${error.message}`);
+      alert("Check credentials or user does not exist");
     }
   };
 
