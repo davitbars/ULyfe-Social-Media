@@ -29,7 +29,7 @@ const CreatePost = ({ onCancel }) => {
     if (onCancel) {
       onCancel();
     } else {
-      navigate("/screens/forum"); 
+      navigate("/screens/forum");
     }
   };
 

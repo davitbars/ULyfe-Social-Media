@@ -14,89 +14,76 @@ export const addForumPost = async (userId, postData) => {
         storage,
         `forumImages/${userId}/${imageFile.name}`
       );
-      await uploadString(storageRef, imageFile);
+
+      // Upload the image file as bytes
+      await uploadBytes(storageRef, imageFile);
+
+      // Get the download URL of the uploaded image
       const imageUrl = await getDownloadURL(storageRef);
       imageUrls.push(imageUrl);
-      // Upload images to Firebase Storage and get their download URLs
-      const imageUrls = [];
-      for (const imageFile of postData.images) {
-        const storageRef = ref(
-          storage,
-          `forumImages/${userId}/${imageFile.name}`
-        );
-
-        // Upload the image file as bytes
-        await uploadBytes(storageRef, imageFile);
-
-        // Get the download URL of the uploaded image
-        const imageUrl = await getDownloadURL(storageRef);
-        imageUrls.push(imageUrl);
-      }
-
-      // Create a new post document
-      const newPostRef = await addDoc(postsCollection, {
-        userId: userId,
-        forumTitle: postData.forumTitle,
-        description: postData.description,
-        images: imageUrls,
-        tags: postData.tags,
-        createdAt: serverTimestamp(),
-      });
-
-      return newPostRef.id;
-    } catch (error) {
-      throw error;
     }
-  };
-  // Function to add an event to the database
-  export const addEvent = async (eventData) => {
-    try {
-      const eventsCollection = collection(db, "events");
 
-      // Upload thumbnail to Firebase Storage and get its download URL
-      const thumbnailStorageRef = ref(
-        storage,
-        `eventImages/${eventData.thumbnail.name}`
-      );
+    // Create a new post document
+    const newPostRef = await addDoc(postsCollection, {
+      userId: userId,
+      forumTitle: postData.forumTitle,
+      description: postData.description,
+      images: imageUrls,
+      tags: postData.tags,
+      createdAt: serverTimestamp(),
+    });
 
-      // Upload the thumbnail image file as bytes
-      await uploadBytes(thumbnailStorageRef, eventData.thumbnail);
+    return newPostRef.id;
+  } catch (error) {
+    throw error;
+  }
+};
 
-      // Get the download URL of the uploaded thumbnail image
-      const thumbnailUrl = await getDownloadURL(thumbnailStorageRef);
+// Function to add an event to the database
+export const addEvent = async (eventData) => {
+  try {
+    const eventsCollection = collection(db, "events");
 
-      // Upload other images to Firebase Storage and get their download URLs
-      const imageUrls = [];
-      for (const imageFile of eventData.images) {
-        const storageRef = ref(
-          storage,
-          `eventImages/${imageFile.name}`
-        );
+    // Upload thumbnail to Firebase Storage and get its download URL
+    const thumbnailStorageRef = ref(
+      storage,
+      `eventImages/${eventData.thumbnail.name}`
+    );
 
-        // Upload the image file as bytes
-        await uploadBytes(storageRef, imageFile);
+    // Upload the thumbnail image file as bytes
+    await uploadBytes(thumbnailStorageRef, eventData.thumbnail);
 
-        // Get the download URL of the uploaded image
-        const imageUrl = await getDownloadURL(storageRef);
-        imageUrls.push(imageUrl);
-      }
+    // Get the download URL of the uploaded thumbnail image
+    const thumbnailUrl = await getDownloadURL(thumbnailStorageRef);
 
-      // Create a new event document
-      const newEventRef = await addDoc(eventsCollection, {
-        title: eventData.title,
-        description: eventData.description,
-        date: eventData.date,
-        time: eventData.time,
-        location: eventData.location,
-        price: eventData.price,
-        thumbnail: thumbnailUrl, // Add the thumbnail URL
-        images: imageUrls,
-        createdAt: serverTimestamp(),
-      });
+    // Upload other images to Firebase Storage and get their download URLs
+    const imageUrls = [];
+    for (const imageFile of eventData.images) {
+      const storageRef = ref(storage, `eventImages/${imageFile.name}`);
 
-      return newEventRef.id;
-    } catch (error) {
-      throw error;
+      // Upload the image file as bytes
+      await uploadBytes(storageRef, imageFile);
+
+      // Get the download URL of the uploaded image
+      const imageUrl = await getDownloadURL(storageRef);
+      imageUrls.push(imageUrl);
     }
-  };
-}
+
+    // Create a new event document
+    const newEventRef = await addDoc(eventsCollection, {
+      title: eventData.title,
+      description: eventData.description,
+      date: eventData.date,
+      time: eventData.time,
+      location: eventData.location,
+      price: eventData.price,
+      thumbnail: thumbnailUrl,
+      images: imageUrls,
+      createdAt: serverTimestamp(),
+    });
+
+    return newEventRef.id;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -1,19 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../firebase";
-import { collection, doc, setDoc } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth"; // Importing onAuthStateChanged
+import { doc, setDoc } from "firebase/firestore";
+import styles from "./Auth.module.css";
 
 const AdditionalInfo = () => {
   const [major, setMajor] = useState("");
   const [campus, setCampus] = useState("");
   const [graduationYear, setGraduationYear] = useState("");
   const [name, setName] = useState("");
+  const [validationError, setValidationError] = useState(false); // <-- new state for validation
   const navigate = useNavigate();
 
   const handleInfoSubmit = async () => {
+    // Check if fields are filled
+    if (!name || !major || !campus || !graduationYear) {
+      setValidationError(true);
+      return; // Do not proceed if validation fails
+    }
     try {
-      const userRef = doc(db, "users", auth.currentUser.uid); // This gets a reference to a specific document with the UID
+      const userRef = doc(db, "users", auth.currentUser.uid);
       await setDoc(userRef, {
         uid: auth.currentUser.uid,
         name,
@@ -27,56 +33,60 @@ const AdditionalInfo = () => {
     }
   };
 
-  // // Effect to monitor user's email verification status
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (!user) return; // No user logged in
-
-  //     if (user.emailVerified) {
-  //       navigate("/screens/forum");
-  //     } else {
-  //       alert("Please verify your email before accessing the forum.");
-  //       // Optionally: Log the user out and navigate them back to the login page
-  //       // await signOut(auth);
-  //       // navigate("/auth");
-  //     }
-  //   });
-
-  //   // Clean up the listener on component unmount
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, [navigate]);
-
   return (
-    <div>
-      <h1>Additional Info</h1>
-      <div>
-        <label>Name:</label>
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <label>Major:</label>
-        <input
-          type="text"
-          value={major}
-          onChange={(e) => setMajor(e.target.value)}
-        />
-        <label>Campus:</label>
-        <input
-          type="text"
-          value={campus}
-          onChange={(e) => setCampus(e.target.value)}
-        />
-        <label>Expected Graduation Year:</label>
-        <input
-          type="text"
-          value={graduationYear}
-          onChange={(e) => setGraduationYear(e.target.value)}
-        />
-        <button onClick={handleInfoSubmit}>Submit</button>
+    <div className={styles.container}>
+      <div className={styles["auth-container"]}>
+        <form onSubmit={AdditionalInfo}>
+          <h1>Additional Info</h1>
+
+          <label>Name:</label>
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className={`${styles.inputBox} ${
+              validationError && !name ? styles.error : ""
+            }`} // <-- conditional styling
+            required
+          />
+
+          <label>Major:</label>
+          <input
+            type="text"
+            value={major}
+            onChange={(e) => setMajor(e.target.value)}
+            className={`${styles.inputBox} ${
+              validationError && !major ? styles.error : ""
+            }`} // <-- conditional styling
+            required
+          />
+
+          <label>Campus:</label>
+          <input
+            type="text"
+            value={campus}
+            onChange={(e) => setCampus(e.target.value)}
+            className={`${styles.inputBox} ${
+              validationError && !campus ? styles.error : ""
+            }`} // <-- conditional styling
+            required
+          />
+
+          <label>Expected Graduation Year:</label>
+          <input
+            type="text"
+            value={graduationYear}
+            onChange={(e) => setGraduationYear(e.target.value)}
+            className={`${styles.inputBox} ${
+              validationError && !graduationYear ? styles.error : ""
+            }`} // <-- conditional styling
+            required
+          />
+
+          <button onClick={handleInfoSubmit} className={styles.login}>
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   );

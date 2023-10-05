@@ -16,6 +16,7 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [validationError, setValidationError] = useState(false); // <-- New State for Validation
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -62,7 +63,14 @@ const Auth = () => {
     }
   };
 
-  const handleAuthAttempt = async () => {
+  const handleAuthAttempt = async (e) => {
+    e.preventDefault(); // <-- Prevent the default form behavior
+
+    // New check to ensure fields aren't blank
+    if (!email || !password || (!isLogin && !confirmPassword)) {
+      setValidationError(true);
+      return;
+    }
     if (!email.endsWith(".edu")) {
       alert("Please use a student email");
       return;
@@ -94,41 +102,49 @@ const Auth = () => {
     <div className={styles.container}>
       <h1>{isLogin ? "Login" : "Signup"}</h1>
       <div className={styles["auth-container"]}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={styles.inputBox}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={styles.inputBox}
-          />
-        </div>
-        {!isLogin && (
+        <form onSubmit={handleAuthAttempt}>
           <div>
-            <label>Confirm Password:</label>
+            <label>Email:</label>
             <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className={styles.inputBox}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className={`${styles.inputBox} ${
+                validationError && !email ? styles.error : ""
+              }`}
             />
           </div>
-        )}
-        <button className={styles.login} onClick={handleAuthAttempt}>
-          {isLogin ? "Login" : "Signup"}
-        </button>
-        <button className={styles.login} onClick={() => setIsLogin(!isLogin)}>
-          Switch to {isLogin ? "Signup" : "Login"}
-        </button>
+          <div>
+            <label>Password:</label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={`${styles.inputBox} ${
+                validationError && !password ? styles.error : ""
+              }`}
+            />
+          </div>
+          {!isLogin && (
+            <div>
+              <label>Confirm Password:</label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                className={`${styles.inputBox} ${
+                  validationError && !confirmPassword ? styles.error : ""
+                }`}
+              />
+            </div>
+          )}
+          <button className={styles.login} onClick={handleAuthAttempt}>
+            {isLogin ? "Login" : "Signup"}
+          </button>
+          <button className={styles.login} onClick={() => setIsLogin(!isLogin)}>
+            Switch to {isLogin ? "Signup" : "Login"}
+          </button>
+        </form>
       </div>
     </div>
   );
