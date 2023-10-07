@@ -1,75 +1,66 @@
-import React, { useState } from "react";
-import styles from "./Dating.module.css";
-import davitImage from "../../images/dav.jpeg";
-import hovsepImage from "../../images/hos.jpeg";
+import React, { useState, useEffect } from "react";
+import AccountNotSetUp from "./accountNotSetup";
+import { getDoc, doc } from "firebase/firestore";
+import { db, auth } from "../../firebase";
+import Swiping from './swiping'; 
 
-const users = [
-  { id: 1, name: "Davit", image: davitImage },
-  { id: 2, name: "Hovsep", image: hovsepImage },
-  // ... Add more profiles as needed
-];
 
-function Dating() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [prevIndex, setPrevIndex] = useState(null); // Store the previous index
+const Dating = () => {
+  const [user, setUser] = useState(null);
 
-  const handleSwipe = (direction) => {
-    if (direction === "right") {
-      // Logic for a "like"
-    } else if (direction === "left") {
-      // Logic for a "dislike"
+  useEffect(() => {
+    // Listen for authentication state changes
+    const unsubscribe = auth.onAuthStateChanged(async (firebaseUser) => {
+      if (firebaseUser) {
+        // User is logged in
+        const userId = firebaseUser.uid;
+
+        // Fetch user data using the user ID
+        fetchUserData(userId);
+      } else {
+        // User is not logged in, handle as needed
+        setUser(null);
+      }
+    });
+
+    // Clean up the subscription when the component unmounts
+    return () => unsubscribe();
+  }, []);
+
+  // Function to fetch user data using the user ID
+  const fetchUserData = async (userId) => {
+    try {
+      const userRef = doc(db, "users", userId);
+      const userDoc = await getDoc(userRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setUser(userData);
+      } else {
+        console.log("No user data found for user:", userId);
+        setUser(null);
+      }
+    } catch (error) {
+      console.error("Error fetching user data: ", error);
     }
-    setPrevIndex(currentIndex); // Store the current index before moving on
-    setCurrentIndex((prevIndex) => prevIndex + 1); // move to next profile
   };
 
-  const handleReverse = () => {
-    if (prevIndex !== null) {
-      setCurrentIndex(prevIndex);
-      setPrevIndex(null); // Clear out the previous index after reversing to avoid multiple reverses
-    }
-  };
+  if (!user) {
+    return <div>Loading...</div>; // You can add a loading indicator
+  }
 
+  // Check the datingProfileSetup property
+  if (user.datingProfileSetup === false) {
+    return <AccountNotSetUp />;
+  }
+
+  // If datingProfileSetup is true, render your dating component
   return (
-    <div className={styles.datingContainer}>
-      {currentIndex < users.length ? (
-        <div className={styles.profile}>
-          <img src={users[currentIndex].image} alt={users[currentIndex].name} />
-          <div className={styles.profileInfo}>
-            <p>{users[currentIndex].name}</p>
-            <div className={styles.btonContainer}>
-              <button
-                className={`${styles.bton} ${styles.reverse}`}
-                onClick={handleReverse} // Handle reverse logic
-              >
-                <i className="fa fa-undo"></i>
-              </button>
-              <button
-                className={`${styles.bton} ${styles.dislike}`}
-                onClick={() => handleSwipe("left")}
-              >
-                <i className="fa fa-times"></i>
-              </button>
-              <button
-                className={`${styles.bton} ${styles.superlike}`}
-                // onClick={() => /* Handle superlike logic */}
-              >
-                <i className="fa fa-star"></i>
-              </button>
-              <button
-                className={`${styles.bton} ${styles.like}`}
-                onClick={() => handleSwipe("right")}
-              >
-                <i className="fa fa-heart"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <p>No more profiles left!</p>
-      )}
+    <div>
+      <h1>Welcome to the Dating Page</h1>
+      <Swiping />
     </div>
   );
-}
+};
 
 export default Dating;
