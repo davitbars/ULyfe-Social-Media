@@ -26,6 +26,8 @@ const AdditionalInfo = () => {
         major,
         campus,
         graduationYear,
+        datingProfileSetup: false, 
+        datingProfile: null,
       });
       navigate("/screens/forum");
     } catch (error) {

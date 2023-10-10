@@ -60,8 +60,6 @@ const handleFileInputChange = async (e) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // TODO: Add form validation logic here
-
         // Check if required fields are not empty
         if (
             !formData.profileImages[0] ||
