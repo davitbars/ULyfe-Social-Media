@@ -38,7 +38,7 @@ const AdditionalInfo = () => {
   return (
     <div className={styles.container}>
       <div className={styles["auth-container"]}>
-        <form onSubmit={AdditionalInfo}>
+        <form onSubmit={handleInfoSubmit}>
           <h1>Additional Info</h1>
 
           <label>Name:</label>
@@ -85,7 +85,7 @@ const AdditionalInfo = () => {
             required
           />
 
-          <button onClick={handleInfoSubmit} className={styles.login}>
+          <button type="submit" onClick={handleInfoSubmit} className={styles.login}>
             Submit
           </button>
         </form>
