@@ -17,7 +17,7 @@ const AdditionalInfo = () => {
   const handleInfoSubmit = async () => {
     if (!name || !major || !campus || !graduationYear) {
       setValidationError(true);
-      return; 
+      return;
     }
     try {
       const userRef = doc(db, "users", auth.currentUser.uid);
@@ -27,7 +27,7 @@ const AdditionalInfo = () => {
         major,
         campus,
         graduationYear,
-        datingProfileSetup, 
+        datingProfileSetup,
         datingProfile,
       });
       console.log("Before Navigation");
@@ -41,7 +41,7 @@ const AdditionalInfo = () => {
   return (
     <div className={styles.container}>
       <div className={styles["auth-container"]}>
-        <form onSubmit={AdditionalInfo}>
+        <form onSubmit={(e) => e.preventDefault()}>
           <h1>Additional Info</h1>
 
           <label>Name:</label>
@@ -51,7 +51,7 @@ const AdditionalInfo = () => {
             onChange={(e) => setName(e.target.value)}
             className={`${styles.inputBox} ${
               validationError && !name ? styles.error : ""
-            }`} 
+            }`}
             required
           />
 
@@ -88,7 +88,11 @@ const AdditionalInfo = () => {
             required
           />
 
-          <button type="submit" onClick={handleInfoSubmit} className={styles.login}>
+          <button
+            type="submit"
+            onClick={handleInfoSubmit}
+            className={styles.login}
+          >
             Submit
           </button>
         </form>

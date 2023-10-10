@@ -1,30 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import './forumFeed.css';
-import { db } from '../../firebase';
-import { collection, getDocs } from "firebase/firestore";
-
+import React, { useEffect, useState } from "react";
+import "./forumFeed.css";
+import { db } from "../../firebase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 function ForumFeed() {
   const [forumPosts, setForumPosts] = useState([]);
 
-  // Fetch forum post data from Firestore when the component mounts
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = () => {
       try {
-        const querySnapshot = await getDocs(collection(db, 'forumPosts'));
-        const postsData = [];
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          postsData.push({
-            id: doc.id,
-            title: data.forumTitle,
-            content: data.description,
-            images: data.images,
+        const forumPostsCollection = collection(db, "forumPosts");
+        const q = query(forumPostsCollection, orderBy("createdAt", "asc")); // order by createdAt timestamp in ascending order
+
+        // This will listen for real-time updates
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+          const postsData = [];
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            postsData.push({
+              id: doc.id,
+              title: data.forumTitle,
+              content: data.description,
+              images: data.images,
+            });
           });
+          setForumPosts(postsData);
         });
-        setForumPosts(postsData);
+
+        return () => unsubscribe();
       } catch (error) {
-        console.error('Error fetching forum posts: ', error);
+        console.error("Error fetching forum posts: ", error);
       }
     };
 
