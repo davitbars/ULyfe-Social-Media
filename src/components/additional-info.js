@@ -9,14 +9,15 @@ const AdditionalInfo = () => {
   const [campus, setCampus] = useState("");
   const [graduationYear, setGraduationYear] = useState("");
   const [name, setName] = useState("");
+  const [datingProfileSetup, setDatingProfileSetup] = useState(false);
+  const [datingProfile, setDatingProfile] = useState(null);
   const [validationError, setValidationError] = useState(false); // <-- new state for validation
   const navigate = useNavigate();
 
   const handleInfoSubmit = async () => {
-    // Check if fields are filled
     if (!name || !major || !campus || !graduationYear) {
       setValidationError(true);
-      return; // Do not proceed if validation fails
+      return; 
     }
     try {
       const userRef = doc(db, "users", auth.currentUser.uid);
@@ -26,10 +27,12 @@ const AdditionalInfo = () => {
         major,
         campus,
         graduationYear,
-        datingProfileSetup: false, 
-        datingProfile: null,
+        datingProfileSetup, 
+        datingProfile,
       });
+      console.log("Before Navigation");
       navigate("/screens/forum");
+      console.log("after navigation");
     } catch (error) {
       console.error("Error adding user additional info: ", error);
     }
@@ -38,7 +41,7 @@ const AdditionalInfo = () => {
   return (
     <div className={styles.container}>
       <div className={styles["auth-container"]}>
-        <form onSubmit={handleInfoSubmit}>
+        <form onSubmit={AdditionalInfo}>
           <h1>Additional Info</h1>
 
           <label>Name:</label>
@@ -48,7 +51,7 @@ const AdditionalInfo = () => {
             onChange={(e) => setName(e.target.value)}
             className={`${styles.inputBox} ${
               validationError && !name ? styles.error : ""
-            }`} // <-- conditional styling
+            }`} 
             required
           />
 

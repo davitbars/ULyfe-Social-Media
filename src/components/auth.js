@@ -38,30 +38,27 @@ const Auth = () => {
   const getUserInfoFromFirestore = async (uid) => {
     try {
       const userRef = doc(db, "users", uid);
-      console.log(`Fetching data for path: users/${uid}`);
+    console.log(`Fetching data for path: users/${uid}`);
 
-      const userDoc = await getDoc(userRef);
-      console.log(userDoc.data());
-      if (userDoc.exists()) {
-        console.log("Manually fetched data:", userDoc.data());
-      } else {
-        console.error("Manual fetch failed.");
-      }
-
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        console.log("User data fetched:", userData);
-        return userData;
-      } else {
-        console.log("No additional info found for user:", uid);
-
-        return null;
-      }
-    } catch (error) {
-      console.error("Error fetching user data: ", error);
-      return null;
+    const userDoc = await getDoc(userRef);
+    console.log(userDoc.data());
+    
+    if (userDoc.exists()) {
+      console.log("Manually fetched data:", userDoc.data());
+      const userData = userDoc.data();
+      console.log("User data fetched:", userData);
+      return userData;
+    } else {
+      console.error("Manual fetch failed.");
     }
-  };
+
+    console.log("No additional info found for user:", uid);
+    return null;
+  } catch (error) {
+    console.error("Error fetching user data: ", error);
+    return null;
+  }
+};
 
   const handleAuthAttempt = async (e) => {
     e.preventDefault(); // <-- Prevent the default form behavior
