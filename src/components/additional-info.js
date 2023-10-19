@@ -9,8 +9,6 @@ const AdditionalInfo = () => {
   const [campus, setCampus] = useState("");
   const [graduationYear, setGraduationYear] = useState("");
   const [name, setName] = useState("");
-  const [datingProfileSetup, setDatingProfileSetup] = useState(false);
-  const [datingProfile, setDatingProfile] = useState(null);
   const [validationError, setValidationError] = useState(false); // <-- new state for validation
   const navigate = useNavigate();
 
@@ -27,9 +25,9 @@ const AdditionalInfo = () => {
         major,
         campus,
         graduationYear,
-        datingProfileSetup,
-        datingProfile,
+        datingProfileSetup: false,
       });
+      
       console.log("Before Navigation");
       navigate("/screens/forum");
       console.log("after navigation");

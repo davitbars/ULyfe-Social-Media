@@ -3,10 +3,13 @@ import AccountNotSetUp from "./accountNotSetup";
 import { getDoc, doc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
 import Swiping from './swiping'; 
+import "./dating.css";
+import ProfileInfo from './ProfileInfo';
 
 
 const Dating = () => {
   const [user, setUser] = useState(null);
+  const [currentProfileUid, setCurrentProfileUid] = useState(/* Set the initial profile UID here */);
 
   useEffect(() => {
     // Listen for authentication state changes
@@ -56,9 +59,13 @@ const Dating = () => {
 
   // If datingProfileSetup is true, render your dating component
   return (
-    <div>
-      <h1>Welcome to the Dating Page</h1>
-      <Swiping />
+    <div className="dating-container">
+      <div className="swiping-container">
+        <Swiping currentProfileUid={currentProfileUid} setCurrentProfileUid={setCurrentProfileUid} />
+      </div>
+      <div className="info-container">
+        <ProfileInfo currentProfileUid={currentProfileUid} />
+      </div>
     </div>
   );
 };
