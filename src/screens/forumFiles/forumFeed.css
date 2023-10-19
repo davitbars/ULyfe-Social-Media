@@ -1,5 +1,3 @@
-/* ForumFeed.css */
-
 .forum-feed {
   overflow-y: auto; /* Enable vertical scrolling when necessary */
   max-height: calc(100vh - 200px);
@@ -124,4 +122,11 @@
   font-size: 1.2em;
   text-align: center;
   color: gray;
+}
+.upvoted {
+  color: green; /* or any color you want to represent upvote */
+}
+
+.downvoted {
+  color: red; /* or any color you want to represent downvote */
 }

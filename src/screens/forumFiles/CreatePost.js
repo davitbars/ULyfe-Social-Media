@@ -3,6 +3,7 @@ import "./CreatePost.css";
 import { addForumPost } from "../../firebaseFunctions";
 import { useNavigate } from "react-router-dom";
 import { FaRegArrowAltCircleLeft } from "react-icons/fa";
+import { auth } from "../../firebase"; // Import the authentication module
 
 const CreatePost = ({ onCancel }) => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,9 @@ const CreatePost = ({ onCancel }) => {
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
+
+  // Get the current user's ID if available, or set it to null if not logged in
+  const userId = auth.currentUser ? auth.currentUser.uid : null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,37 +44,35 @@ const CreatePost = ({ onCancel }) => {
       console.error("Tags are required.");
       return;
     }
-    // Extract the user ID (replace with your actual authentication logic)
-    const userId = "your-user-id";
+
+    if (!userId) {
+      console.error("User not authenticated.");
+      return;
+    }
 
     try {
       // Ensure required fields are filled out
       if (!formData.forumTitle || !formData.description) {
-        // Display an error message or handle it as you prefer
         console.error("Forum Title and Description are required.");
         return;
       }
 
-      // Call the addForumPost function to add the post to the database
       const postId = await addForumPost(userId, {
         forumTitle: formData.forumTitle,
         description: formData.description,
         tags: formData.tags,
-        images: images, // Include the selected images
+        images: images,
       });
 
-      // Reset the form fields after successful submission
       setFormData({
         forumTitle: "",
         description: "",
         tags: "",
       });
-      setImages([]); // Clear selected images
+      setImages([]);
 
-      // Show a success notification
       setShowSuccessNotification(true);
 
-      // Automatically return to the forum feed after a delay (e.g., 3 seconds)
       setTimeout(() => {
         handleBackClick();
       }, 3000);

@@ -10,6 +10,7 @@ import {
   doc,
   updateDoc,
   where,
+  getDoc,
 } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -19,6 +20,7 @@ import {
   faShareSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { increment } from "firebase/firestore";
+import { auth } from "../../firebase";
 
 function ForumFeed({ selectedTag }) {
   const [forumPosts, setForumPosts] = useState([]);
@@ -66,7 +68,18 @@ function ForumFeed({ selectedTag }) {
 
   const vote = async (postId, change) => {
     const postRef = doc(db, "forumPosts", postId);
-    await updateDoc(postRef, { votes: increment(change) });
+    const postSnapshot = await getDoc(postRef);
+    const post = postSnapshot.data();
+
+    if (post.votes && post.votes[auth.currentUser.uid]) {
+      console.log("You've already voted on this post.");
+      return;
+    }
+
+    await updateDoc(postRef, {
+      votesCount: increment(change),
+      [`votes.${auth.currentUser.uid}`]: change,
+    });
   };
 
   const toggleCommentSection = (postId) => {
@@ -105,29 +118,45 @@ function ForumFeed({ selectedTag }) {
             </div>
             <div className="post-actions">
               <button
-                className="action-button"
+                className={`action-button ${
+                  post.votes && post.votes[auth.currentUser.uid] === 1
+                    ? "upvoted"
+                    : ""
+                }`}
                 onClick={() => vote(post.id, 1)}
               >
-                <FontAwesomeIcon icon={faThumbsUp} color="#0557fa" />
+                <FontAwesomeIcon icon={faThumbsUp} />
               </button>
-              <span>{post.votes || 0}</span>
+
+              <span>
+                {post.votes
+                  ? Object.values(post.votes).reduce(
+                      (acc, vote) => acc + vote,
+                      0
+                    )
+                  : 0}
+              </span>
+
               <button
-                className="action-button"
+                className={`action-button ${
+                  post.votes && post.votes[auth.currentUser.uid] === -1
+                    ? "downvoted"
+                    : ""
+                }`}
                 onClick={() => vote(post.id, -1)}
               >
-                <FontAwesomeIcon icon={faThumbsDown} color="#0557fa" />
+                <FontAwesomeIcon icon={faThumbsDown} />
               </button>
+
               <button
-                className="action-button"
+                className={`action-button ${
+                  post.votes && post.votes[auth.currentUser.uid] === -1
+                    ? "downvoted"
+                    : ""
+                }`}
                 onClick={() => toggleCommentSection(post.id)}
               >
                 <FontAwesomeIcon icon={faCommentAlt} color="#0557fa" />
-              </button>
-              <button
-                className="action-button"
-                onClick={() => share(post.id, post.title)}
-              >
-                <FontAwesomeIcon icon={faShareSquare} color="#0557fa" />
               </button>
             </div>
             {selectedPostId === post.id && (

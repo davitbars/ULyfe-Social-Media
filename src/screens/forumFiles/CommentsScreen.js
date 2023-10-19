@@ -7,14 +7,25 @@ import {
   query,
   onSnapshot,
   orderBy,
+  getDoc,
+  FieldValue,
+  serverTimestamp,
+  increment,
 } from "firebase/firestore";
-import { db } from "../../firebase";
-import { getAnonymousUserID } from "../../firebaseFunctions";
+import { db, auth } from "../../firebase";
 import "./CommentsScreen.css";
-import { serverTimestamp } from "firebase/firestore";
-import { FieldValue } from "firebase/firestore";
 
 function Comment({ commentData, allComments, depth, addReply, voteComment }) {
+  const [currentUserId, setCurrentUserId] = useState(null);
+
+  useEffect(() => {
+    const userID = auth.currentUser ? auth.currentUser.uid : null;
+    setCurrentUserId(userID);
+  }, []);
+
+  const currentUserVote =
+    commentData.userVotes && commentData.userVotes[currentUserId];
+
   const replies = allComments.filter((c) => c.parentId === commentData.id);
 
   return (
@@ -24,13 +35,24 @@ function Comment({ commentData, allComments, depth, addReply, voteComment }) {
         <button
           className="vote-button upvote"
           onClick={() => voteComment(commentData.id, 1)}
+          disabled={currentUserVote === 1}
         >
           ↑
         </button>
-        <span className="vote-count">{commentData.votes || 0}</span>
+
+        <span className="vote-count">
+          {commentData.userVotes
+            ? Object.values(commentData.userVotes).reduce(
+                (acc, vote) => acc + vote,
+                0
+              )
+            : 0}
+        </span>
+
         <button
           className="vote-button downvote"
           onClick={() => voteComment(commentData.id, -1)}
+          disabled={currentUserVote === -1}
         >
           ↓
         </button>
@@ -82,11 +104,16 @@ function CommentsScreen({ postId }) {
 
   const addComment = async (text, parentId = null) => {
     try {
-      const userID = await getAnonymousUserID();
+      const userID = auth.currentUser ? auth.currentUser.uid : null;
+      if (!userID) {
+        console.error("User is not logged in.");
+        return;
+      }
       await addDoc(collection(db, "forumPosts", postId, "comments"), {
         userId: userID,
         text: text,
         parentId: parentId,
+        userVotes: {}, // Initialize votes as an empty object
         votes: 0,
         createdAt: serverTimestamp(),
       });
@@ -98,11 +125,36 @@ function CommentsScreen({ postId }) {
 
   const voteComment = async (commentId, change) => {
     try {
+      const userID = auth.currentUser ? auth.currentUser.uid : null;
+      if (!userID) {
+        console.error("User is not logged in.");
+        return;
+      }
       const commentRef = doc(db, "forumPosts", postId, "comments", commentId);
-      console.log("Comment ID:", commentId, "Change:", change);
+      const commentSnap = await getDoc(commentRef);
+      const commentData = commentSnap.data();
 
+      // If the user has already voted in this direction, do nothing.
+      if (commentData.userVotes && commentData.userVotes[userID] === change) {
+        console.log("You've already voted in this direction.");
+        return;
+      }
+
+      let userVoteUpdate = {};
+      let voteIncrement = change;
+
+      // If user previously voted in the opposite direction, we should double the vote change to counteract their previous vote.
+      if (commentData.userVotes && commentData.userVotes[userID] === -change) {
+        voteIncrement = 2 * change;
+      }
+
+      // Update user's vote direction.
+      userVoteUpdate[`userVotes.${userID}`] = change;
+
+      // Update the comment's votes in the database.
       await updateDoc(commentRef, {
-        votes: FieldValue.increment(change),
+        ...userVoteUpdate,
+        votes: increment(voteIncrement), // using the increment function from Firestore to ensure atomic operations
       });
     } catch (e) {
       console.error("Error updating comment vote: ", e);
