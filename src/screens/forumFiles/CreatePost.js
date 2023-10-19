@@ -36,6 +36,10 @@ const CreatePost = ({ onCancel }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!formData.tags) {
+      console.error("Tags are required.");
+      return;
+    }
     // Extract the user ID (replace with your actual authentication logic)
     const userId = "your-user-id";
 
@@ -115,14 +119,24 @@ const CreatePost = ({ onCancel }) => {
         </div>
         <div className="input-group">
           <label>Tags:</label>
-          <input
-            type="text"
+          <select
             name="tags"
             value={formData.tags}
             onChange={handleChange}
             className="input-field"
-          />
+            required
+          >
+            <option value="">Select a tag...</option>
+            <option value="general">General</option>
+            <option value="professors">Professors</option>
+            <option value="classes">Classes</option>
+            <option value="majors">Majors</option>
+            <option value="clubs">Clubs</option>
+            <option value="restaurants">Restaurants</option>
+            <option value="frats-sororities">Frats/Sororities</option>
+          </select>
         </div>
+
         <button type="submit" className="submit-button">
           Create Post
         </button>

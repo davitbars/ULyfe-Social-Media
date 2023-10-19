@@ -1,43 +1,127 @@
 /* ForumFeed.css */
 
 .forum-feed {
-    overflow-y: scroll;
-    /* Enable vertical scrolling */
-    max-height: calc(100vh - 200px);
-    /* Adjust the max height as needed */
-    padding: 20px;
-    /* Add padding around the feed */
+  overflow-y: auto; /* Enable vertical scrolling when necessary */
+  max-height: calc(100vh - 200px);
+  padding: 20px;
+  background-color: #f8f8f8; /* Light background for the whole feed */
 }
 
 .forum-post {
-    border: 1px solid #ddd;
-    /* Border for each post */
-    padding: 10px;
-    /* Add padding to each post */
-    margin-bottom: 20px;
-    /* Spacing between posts */
+  border: 1px solid #ddd;
+  border-radius: 10px; /* Rounded corners */
+  padding: 20px; /* Increased padding */
+  margin-bottom: 20px;
+  background-color: #fff; /* White background for each post */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for a 'lifted' effect */
+  position: relative; /* To position post actions absolutely within */
 }
 
 .post-title {
-    font-weight: bold;
-    /* Title in bold */
+  font-weight: bold;
+  font-size: 18px; /* Increase font size for better readability */
 }
 
 .post-content {
-    margin-top: 10px;
-    /* Margin between title and content */
+  margin-top: 10px;
+  font-size: 16px; /* Slightly larger base font size */
 }
 
 .post-image {
-    max-height: 250px;
-    display: block;
-    margin-top: 10px;
-    border: 1px solid grey;
+  max-height: 250px;
+  width: auto;
+  display: block;
+  margin: 10px 0; /* Top and bottom margin */
+  border: 1px solid #ddd; /* Lighter border color */
 }
 
 .images-container {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    overflow: scroll;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: scroll;
+}
+
+/* Style for the post actions */
+
+.post-actions {
+  position: absolute;
+  bottom: 20px; /* Added more spacing between the buttons and the post content */
+  right: 20px; /* Adjust as needed, Moves the buttons to the right */
+  display: flex;
+  justify-content: space-between; /* Distribute space evenly between elements */
+  align-items: center;
+}
+
+.action-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px; /* Larger icons */
+  color: #0557fa; /* Blue color for the icons */
+  margin-left: 10px; /* Space between buttons */
+}
+
+.action-button:focus {
+  outline: none;
+}
+
+.comments-screen {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.comments-list {
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.comment-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment-input input {
+  flex: 1;
+  padding: 10px;
+  margin-right: 20px;
+}
+
+.comment-input button {
+  padding: 10px 20px;
+}
+/* Add to forumFeed.css */
+
+.comments-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 500px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.close-btn {
+  background-color: #ccc;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  float: right;
+}
+
+.close-btn:hover {
+  background-color: #bbb;
+}
+.no-posts-message {
+  padding: 20px;
+  font-size: 1.2em;
+  text-align: center;
+  color: gray;
 }

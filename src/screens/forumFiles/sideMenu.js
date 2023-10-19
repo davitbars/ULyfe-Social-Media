@@ -1,51 +1,22 @@
 import React, { useState } from "react";
 import "./sideMenu.css";
 
-function SideMenu() {
+function SideMenu({ setSelectedTag, selectedTag }) {
   const [categories, setCategories] = useState([
-    {
-      name: "Professors",
-      subcategories: ["Professor 1", "Professor 2", "Professor 3"],
-      isOpen: false,
-    },
-    {
-      name: "Classes",
-      subcategories: ["Class 1", "Class 2", "Class 3"],
-      isOpen: false,
-    },
-    {
-      name: "Majors",
-      subcategories: ["Major 1", "Major 2", "Major 3"],
-      isOpen: false,
-    },
-    {
-      name: "Clubs",
-      subcategories: ["Club 1", "Club 2", "Club 3"],
-      isOpen: false,
-    },
-    {
-      name: "Restaurants",
-      subcategories: ["Restaurant 1", "Restaurant 2", "Restaurant 3"],
-      isOpen: false,
-    },
-    {
-      name: "Frats/Sororities",
-      subcategories: ["Frat/Sorority 1", "Frat/Sorority 2", "Frat/Sorority 3"],
-      isOpen: false,
-    },
+    { name: "General", tag: "general" },
+    { name: "Professors", tag: "professors" },
+    { name: "Classes", tag: "classes" },
+    { name: "Majors", tag: "majors" },
+    { name: "Clubs", tag: "clubs" },
+    { name: "Restaurants", tag: "restaurants" },
+    { name: "Frats/Sororities", tag: "frats-sororities" },
   ]);
+  console.log("Current Selected Tag:", selectedTag);
 
-  const handleCategoryClick = (index) => {
-    setCategories((prevCategories) => {
-      const newCategories = prevCategories.map((category, i) => {
-        if (i === index) {
-          return { ...category, isOpen: !category.isOpen };
-        } else {
-          return { ...category, isOpen: false };
-        }
-      });
-      return newCategories;
-    });
+  const handleTagClick = (tag) => {
+    console.log("Tag clicked:", tag);
+
+    setSelectedTag(tag);
   };
 
   return (
@@ -53,24 +24,14 @@ function SideMenu() {
       {categories.map((category, index) => (
         <div
           key={index}
-          className={`category ${category.isOpen ? "active" : ""}`}
+          className={`category ${category.tag === selectedTag ? "active" : ""}`}
         >
           <div
             className="category-content"
-            onClick={() => handleCategoryClick(index)}
+            onClick={() => handleTagClick(category.tag)}
           >
             <div className="category-title">{category.name}</div>
-            <span className={`arrow ${category.isOpen ? "up" : "down"}`}>
-              {category.isOpen ? "▲" : "▼"}
-            </span>
           </div>
-          {category.isOpen && (
-            <ul className="subcategory-list">
-              {category.subcategories.map((subcategory, subIndex) => (
-                <li key={subIndex}>{subcategory}</li>
-              ))}
-            </ul>
-          )}
         </div>
       ))}
     </div>

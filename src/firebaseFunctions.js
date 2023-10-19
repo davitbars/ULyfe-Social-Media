@@ -2,6 +2,18 @@ import { db, storage } from "./firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
+// firebaseFunctions.js
+export const getAnonymousUserID = async () => {
+  let userID = localStorage.getItem("anonymousUserID");
+
+  if (userID === null) {
+    userID = new Date().getTime().toString(); // Generating a unique ID based on current time
+    localStorage.setItem("anonymousUserID", userID);
+  }
+
+  return userID;
+};
+
 // Function to add a forum post to the database
 export const addForumPost = async (userId, postData) => {
   try {

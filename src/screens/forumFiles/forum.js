@@ -8,6 +8,7 @@ import CreatePost from "./CreatePost";
 
 function Forum() {
   const [showCreatePost, setShowCreatePost] = useState(false);
+  const [selectedTag, setSelectedTag] = useState(null); // You already have this line
 
   const handleCreatePostClick = () => {
     setShowCreatePost(true);
@@ -19,13 +20,13 @@ function Forum() {
 
       <div className="forum-main-content">
         <div className="side-menu">
-          <SideMenu />
+          <SideMenu setSelectedTag={setSelectedTag} selectedTag={selectedTag} />
         </div>
         <div className="forum-content">
           {showCreatePost ? (
             <CreatePost onCancel={() => setShowCreatePost(false)} />
           ) : (
-            <ForumFeed />
+            <ForumFeed selectedTag={selectedTag} />
           )}
         </div>
 

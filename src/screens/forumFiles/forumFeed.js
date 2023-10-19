@@ -1,60 +1,141 @@
 import React, { useEffect, useState } from "react";
 import "./forumFeed.css";
 import { db } from "../../firebase";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import CommentsScreen from "./CommentsScreen";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  doc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faThumbsUp,
+  faThumbsDown,
+  faCommentAlt,
+  faShareSquare,
+} from "@fortawesome/free-solid-svg-icons";
+import { increment } from "firebase/firestore";
 
-function ForumFeed() {
+function ForumFeed({ selectedTag }) {
   const [forumPosts, setForumPosts] = useState([]);
+  const [selectedPostId, setSelectedPostId] = useState(null);
 
   useEffect(() => {
     const fetchData = () => {
-      try {
-        const forumPostsCollection = collection(db, "forumPosts");
-        const q = query(forumPostsCollection, orderBy("createdAt", "asc")); // order by createdAt timestamp in ascending order
+      const forumPostsCollection = collection(db, "forumPosts");
 
-        // This will listen for real-time updates
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-          const postsData = [];
-          querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            postsData.push({
-              id: doc.id,
-              title: data.forumTitle,
-              content: data.description,
-              images: data.images,
-            });
-          });
-          setForumPosts(postsData);
-        });
-
-        return () => unsubscribe();
-      } catch (error) {
-        console.error("Error fetching forum posts: ", error);
+      let q;
+      if (selectedTag) {
+        q = query(
+          forumPostsCollection,
+          where("tags", "==", selectedTag),
+          orderBy("createdAt", "desc")
+        );
+      } else {
+        q = query(forumPostsCollection, orderBy("createdAt", "desc"));
       }
+
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const postsData = [];
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          postsData.push({
+            id: doc.id,
+            title: data.forumTitle,
+            content: data.description,
+            images: data.images,
+            votes: data.votes,
+          });
+        });
+        setForumPosts(postsData);
+      });
+
+      return () => unsubscribe();
     };
 
     fetchData();
-  }, []);
+  }, [selectedTag]);
+
+  // Removed the extra filteredPosts logic
+
+  console.log("Posts:", forumPosts);
+
+  const vote = async (postId, change) => {
+    const postRef = doc(db, "forumPosts", postId);
+    await updateDoc(postRef, { votes: increment(change) });
+  };
+
+  const toggleCommentSection = (postId) => {
+    if (selectedPostId === postId) {
+      setSelectedPostId(null);
+    } else {
+      setSelectedPostId(postId);
+    }
+  };
+
+  const share = (postId, title) => {
+    // Your share functionality here
+  };
 
   return (
     <div className="forum-feed">
-      {forumPosts.map((post) => (
-        <div key={post.id} className="forum-post">
-          <h2 className="post-title">{post.title}</h2>
-          {post.content && <p className="post-content">{post.content}</p>}
-          <div className="images-container">
-            {post.images &&
-              post.images.map((imageUrl, index) => (
-                <img
-                  key={index}
-                  src={imageUrl}
-                  alt={`Post ${index}`}
-                  className="post-image"
-                />
-              ))}
-          </div>
+      {forumPosts.length === 0 ? (
+        <div className="no-posts-message">
+          No posts made to {selectedTag} yet.
         </div>
-      ))}
+      ) : (
+        forumPosts.map((post) => (
+          <div key={post.id} className="forum-post">
+            <h2 className="post-title">{post.title}</h2>
+            {post.content && <p className="post-content">{post.content}</p>}
+            <div className="images-container">
+              {post.images &&
+                post.images.map((imageUrl, index) => (
+                  <img
+                    key={index}
+                    src={imageUrl}
+                    alt={`Post ${index}`}
+                    className="post-image"
+                  />
+                ))}
+            </div>
+            <div className="post-actions">
+              <button
+                className="action-button"
+                onClick={() => vote(post.id, 1)}
+              >
+                <FontAwesomeIcon icon={faThumbsUp} color="#0557fa" />
+              </button>
+              <span>{post.votes || 0}</span>
+              <button
+                className="action-button"
+                onClick={() => vote(post.id, -1)}
+              >
+                <FontAwesomeIcon icon={faThumbsDown} color="#0557fa" />
+              </button>
+              <button
+                className="action-button"
+                onClick={() => toggleCommentSection(post.id)}
+              >
+                <FontAwesomeIcon icon={faCommentAlt} color="#0557fa" />
+              </button>
+              <button
+                className="action-button"
+                onClick={() => share(post.id, post.title)}
+              >
+                <FontAwesomeIcon icon={faShareSquare} color="#0557fa" />
+              </button>
+            </div>
+            {selectedPostId === post.id && (
+              <CommentsScreen postId={selectedPostId} />
+            )}
+          </div>
+        ))
+      )}
     </div>
   );
 }

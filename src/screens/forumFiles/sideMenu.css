@@ -1,7 +1,5 @@
-/* CSS for the SideMenu component */
-.side-menu {
+.side-menu-box {
   padding-top: 30px;
-  /* width: 15%; */
   padding-left: 30px;
   padding-right: 10px;
   border-right: thin solid #0557fa;
@@ -13,10 +11,16 @@
   justify-content: space-between;
   align-items: center;
   color: #0557fa;
+  cursor: pointer; /* Changes the cursor to a hand on hover */
+  text-decoration: underline; /* Makes the menu option look like a link */
 }
 
-.catetgory :active {
-  width: 30%;
+.category-content:hover {
+  color: darkblue; /* Changes the color on hover */
+}
+
+.category.active .category-content {
+  color: darkblue; /* Makes the currently selected menu option a bit darker */
 }
 
 .arrow {

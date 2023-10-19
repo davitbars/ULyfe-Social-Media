@@ -1,0 +1,123 @@
+/* CommentsScreen.css */
+.comments-section {
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.comments-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.comments-list > div {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #f6f7f8;
+  position: relative;
+}
+
+.comments-list button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 14px;
+  color: #888;
+}
+
+.comments-list button:hover {
+  text-decoration: underline;
+}
+
+.comment-input {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment-input input {
+  flex-grow: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+}
+
+.comment-input button {
+  padding: 10px 15px;
+  background-color: #0079d3;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.comment-input button:hover {
+  background-color: #005fa3;
+}
+
+/* For nested comments, you can add padding for depth. Example for one level deep: */
+.comments-list .comment-depth-1 {
+  padding-left: 20px;
+  border-left: 3px solid #ddd;
+}
+.comment-depth-0 {
+  /* No padding for top-level comments */
+}
+
+.comment-depth-1 {
+  padding-left: 20px;
+  border-left: 2px solid #ddd;
+}
+
+.comment-depth-2 {
+  padding-left: 40px;
+  border-left: 2px solid #ddd;
+}
+.comment {
+  margin-bottom: 1em;
+  padding-left: 1em;
+  border-left: 2px solid #ddd;
+}
+
+.vote-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5em;
+}
+
+.upvote:hover {
+  color: green;
+}
+
+.downvote:hover {
+  color: red;
+}
+
+.vote-count {
+  margin: 0 0.5em;
+}
+
+.reply-button {
+  background-color: #eee;
+  border: none;
+  cursor: pointer;
+  margin-left: 1em;
+}
+
+.comment-input {
+  margin-top: 2em;
+}
+
+.replying-indicator {
+  color: red;
+  margin-bottom: 0.5em;
+}
+
+.send-button,
+.cancel-reply-button {
+  margin-left: 1em;
+}
