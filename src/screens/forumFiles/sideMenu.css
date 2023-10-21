@@ -1,9 +1,8 @@
 .side-menu-box {
-  padding-top: 30px;
-  padding-left: 30px;
-  padding-right: 10px;
-  border-right: thin solid #0557fa;
-  height: 100vh;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  height: calc(100vh + 145px);
+  padding-left: 60px;
 }
 
 .category-content {
@@ -11,21 +10,31 @@
   justify-content: space-between;
   align-items: center;
   color: #0557fa;
-  cursor: pointer; /* Changes the cursor to a hand on hover */
-  text-decoration: underline; /* Makes the menu option look like a link */
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 22px;
+  margin-top: 8px;
 }
 
 .category-content:hover {
-  color: darkblue; /* Changes the color on hover */
+  color: darkblue;
 }
 
 .category.active .category-content {
-  color: darkblue; /* Makes the currently selected menu option a bit darker */
+  color: darkblue;
 }
 
-.arrow {
-  font-size: 18px;
-  margin-right: 0px;
+/* Add this new style for the arrow icon */
+.category-content .arrow {
+  transition: transform 0.2s; /* Smooth transition for the arrow icon */
+  position: absolute; /* Position the arrow */
+  right: 10px; /* Adjust the right margin as needed */
+}
+
+/* Rotate the arrow icon when the category is active */
+.category.active .category-content .arrow {
+  transform: rotate(90deg);
 }
 
 .subcategory-list {
@@ -33,4 +42,25 @@
   padding: 0;
   margin: 0 0 0 10px;
   color: #0557fa;
+  display: none; /* Hide subcategories by default */
+}
+
+/* Display subcategories when the category is active */
+.category.active .subcategory-list {
+  display: block;
+}
+
+.sub-tag {
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 400;
+  color: #0557fa;
+}
+
+.sub-tag:hover {
+  color: darkblue;
+}
+
+.tags-container {
+  margin-left: 25px;
 }

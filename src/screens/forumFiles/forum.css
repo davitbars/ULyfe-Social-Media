@@ -1,29 +1,25 @@
 .forum {
   background-color: white;
   overflow: hidden;
-  /* Prevent the entire page from scrolling */
 }
 
 .forum-main-content {
   display: flex;
-  /* Use Flexbox for two-column layout */
+  flex-direction: row;
 }
 
 .side-menu {
-  flex: 0 0 15%;
+  flex: 0 0 20%;
   height: 100vh;
   overflow-y: auto;
 }
 
 .forum-content {
-  flex: 1;
+  flex: 0 0 60%;;
   padding: 20px;
   overflow-y: scroll;
-  /* Make only the forum content scrollable */
   scrollbar-width: thin;
-  /* Thin scrollbar */
   scrollbar-color: #ccc transparent;
-  /* Scrollbar color */
   padding-top: 0;
 }
 

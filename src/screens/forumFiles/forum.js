@@ -30,10 +30,10 @@ function Forum() {
           )}
         </div>
 
-        {/* Right Side Section */}
+        {/* Right Side Section
         <div className="right-side-section">
           <RightSideSection />
-        </div>
+        </div> */}
       </div>
       {/* Render the "Create Post" button */}
       {!showCreatePost && (
