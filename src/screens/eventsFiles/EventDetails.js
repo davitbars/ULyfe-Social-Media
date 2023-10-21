@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import Gallery from 'react-image-gallery';
-import './EventDetails.css';
+import React, { useState } from "react";
+import Gallery from "react-image-gallery";
+import "./EventDetails.css";
 
 function EventDetails({ event, onClose }) {
   const [showImageOverlay, setShowImageOverlay] = useState(false);
 
-  const images = event ? event.images.map((image, index) => ({
-    original: image,
-    thumbnail: image,
-    originalWidth: 200,
-    originalHeight: 200,
-  })) : [];
+  const images = event
+    ? event.images.map((image, index) => ({
+        original: image,
+        thumbnail: image,
+        originalWidth: 200,
+        originalHeight: 200,
+      }))
+    : [];
 
   const openImageOverlay = () => {
     setShowImageOverlay(true);
@@ -23,18 +25,18 @@ function EventDetails({ event, onClose }) {
   if (!event) {
     return null;
   }
-  
+
   return (
     <div className="event-details-container">
       <h2>{event.title}</h2>
 
       <Gallery items={images} onClick={openImageOverlay} />
 
-      <div className='data-box'>
-        <p className='eventDate'>Date: {event.date}</p>
-        <p className='eventPrice'>Price: ${event.price}</p>
-        <p className='eventLocation'>Location: {event.location}</p>
-        <p className='eventDescription'>Description: {event.description}</p>
+      <div className="data-box">
+        <p className="eventDate">Date: {event.date}</p>
+        <p className="eventPrice">Price: ${event.price}</p>
+        <p className="eventLocation">Location: {event.location}</p>
+        <p className="eventDescription">Description: {event.description}</p>
       </div>
 
       {showImageOverlay && (

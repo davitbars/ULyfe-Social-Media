@@ -1,40 +1,74 @@
-.events-container {
-    width: 30%;
-    height: 90vh;
-    overflow-y: auto;
-    min-width: 300px;
+.event-card-container .events-container {
+  width: 30%;
+  height: 90vh;
+  overflow-y: auto;
+  min-width: 300px;
+  padding: 20px 0;
+  background-color: #f6f6f6;
 }
 
-.event-card {
-    display: flex;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 0px;
-    padding: 10px;
-    background-color: white;
+.event-card-container .event-card {
+  display: flex;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-out;
 }
 
-.event-card:hover {
-    border: 3px solid #0557fa;
-    background-color: #b5ceff;
+.event-card-container .event-card:hover {
+  border: 1px solid #0557fa;
+  box-shadow: 0 5px 15px rgba(5, 87, 250, 0.2);
+  background-color: #e8f0ff;
+  transform: translateY(-5px);
 }
 
-.event-thumbnail img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    margin-right: 10px;
+.event-card-container .event-thumbnail {
+  flex-shrink: 0; /* Prevents the thumbnail container from shrinking */
 }
 
-.event-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0;
+.event-card-container .event-thumbnail img {
+  width: 250px; /* Adjusted width */
+  height: 100%;
+  object-fit: cover;
+  margin-right: 15px;
+  border-radius: 5px;
 }
 
-.event-date,
+.event-card-container .event-card-details {
+  flex: 1; /* Allows details to occupy remaining space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distributes the details evenly */
+}
+
+.event-card-container .event-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.event-card-container .event-date,
 .event-price,
-.event-location {
-    margin: 0;
-    color: #555;
+.event-location,
+.event-time {
+  margin-bottom: 5px;
+  font-size: 14px;
+  color: #777;
+}
+
+.event-card-container .event-price::before {
+  content: "💵 ";
+}
+
+.event-card-container .event-location::before {
+  content: "📍 ";
+}
+
+.event-card-container .event-time::before {
+  content: "⏰ ";
 }

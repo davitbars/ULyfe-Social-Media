@@ -43,6 +43,7 @@ export const addForumPost = async (userId, postData) => {
       images: imageUrls,
       tags: postData.tags,
       createdAt: serverTimestamp(),
+      commentsCount: 0, // Initialize comment count as 0
     });
 
     return newPostRef.id;
