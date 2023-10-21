@@ -108,8 +108,10 @@ const Swiping = ({ currentProfileUid, setCurrentProfileUid, filters, profilesAva
     // Update currentProfileUid whenever currentIndex changes
     if (currentIndex < profiles.length) {
       setCurrentProfileUid(profiles[currentIndex].uid);
+      setProfilesAvailable(true);
     } else if (currentIndex >= profiles.length) {
       setCurrentProfileUid(null);
+      setProfilesAvailable(false);
     }
   }, [currentIndex, profiles, setCurrentProfileUid]);
 
