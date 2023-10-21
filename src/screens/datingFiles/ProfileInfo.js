@@ -43,7 +43,7 @@ const ProfileInfo = ({ currentProfileUid }) => {
     }, [currentProfileUid]);
 
     if (!datingProfile || !user) {
-        return <div>Loading...</div>; // You can add a loading indicator
+        return <div></div>; // You can add a loading indicator
     }
 
     return (

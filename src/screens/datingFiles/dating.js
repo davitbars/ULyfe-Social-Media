@@ -2,14 +2,23 @@ import React, { useState, useEffect } from "react";
 import AccountNotSetUp from "./accountNotSetup";
 import { getDoc, doc } from "firebase/firestore";
 import { db, auth } from "../../firebase";
-import Swiping from './swiping'; 
+import Swiping from './swiping';
 import "./dating.css";
 import ProfileInfo from './ProfileInfo';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComment, faHeart, faCrown } from '@fortawesome/free-solid-svg-icons';
+import Filters from "./Filters";
 
 
 const Dating = () => {
   const [user, setUser] = useState(null);
-  const [currentProfileUid, setCurrentProfileUid] = useState(/* Set the initial profile UID here */);
+  const [currentProfileUid, setCurrentProfileUid] = useState();
+  const [profilesAvailable, setProfilesAvailable] = useState(true);
+  const [filters, setFilters] = useState({
+    age: "Any",
+    race: "Any",
+    gender: "Any",
+  });
 
   useEffect(() => {
     // Listen for authentication state changes
@@ -29,6 +38,11 @@ const Dating = () => {
     // Clean up the subscription when the component unmounts
     return () => unsubscribe();
   }, []);
+
+  const applyFilters = (filters) => {
+    setFilters(filters);
+  };
+
 
   // Function to fetch user data using the user ID
   const fetchUserData = async (userId) => {
@@ -59,12 +73,32 @@ const Dating = () => {
 
   // If datingProfileSetup is true, render your dating component
   return (
-    <div className="dating-container">
-      <div className="swiping-container">
-        <Swiping currentProfileUid={currentProfileUid} setCurrentProfileUid={setCurrentProfileUid} />
+    <div className="full-box">
+      <div className="top-buttons">
+        <button className="button chat-icon">
+          <FontAwesomeIcon icon={faComment} />
+        </button>
+        <button className="button heart-icon">
+          <FontAwesomeIcon icon={faHeart} />
+        </button>
+
+        <button className="button crown-icon">
+          <FontAwesomeIcon icon={faCrown} />
+        </button>
       </div>
-      <div className="info-container">
-        <ProfileInfo currentProfileUid={currentProfileUid} />
+      <div className="filters">
+        <Filters applyFilters={applyFilters} />
+      </div>
+      <div className="dating-container">
+
+        <div className="swiping-container">
+          <Swiping currentProfileUid={currentProfileUid} setCurrentProfileUid={setCurrentProfileUid} filters={filters} profilesAvailable={profilesAvailable} setProfilesAvailable={setProfilesAvailable} />
+        </div>
+        {profilesAvailable && (
+          <div className="info-container">
+            <ProfileInfo currentProfileUid={currentProfileUid} />
+          </div>
+        )}
       </div>
     </div>
   );

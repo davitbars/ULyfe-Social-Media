@@ -1,0 +1,16 @@
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.select-box {
+    padding: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    background-color: white;
+    border: 1px solid blue;
+    font-size: 18px;
+    color: black;
+}
