@@ -1,24 +1,24 @@
 .event-side-menu {
-    background-color: #f0f0f0;
-    padding: 20px;
-    width: 15%;
-    height: 100vh;
-    min-width: 150px;
+  background-color: #f0f0f0;
+  padding: 20px;
+  width: 15%;
+  height: 100vh;
+  min-width: 150px;
 }
 
 .filter-category {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .filter-category h3 {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .filter-category ul {
-    list-style: none;
-    padding: 0;
+  list-style: none;
+  padding: 0;
 }
 
 .filter-category li {
-    margin: 5px 0;
+  margin: 5px 0;
 }

@@ -1,67 +1,44 @@
 .secondary-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    background-color: white;
-    width: 100%;
-    /* border-top: 2px solid #0557fa; */
-}
-
-.Forumlogo {
-    width: 130px;
-    height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background-color: white;
+  width: 100%;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 .search-bar {
-    flex-grow: 1;
-    text-align: center;
+  flex-grow: 1;
+  text-align: center;
+  margin-right: 20px;
 }
 
 .search-bar input {
-    border-radius: 10px;
-    padding: 7px;
-    font-size: 17px;
-    width: 80%;
-    border: thin solid #0557fa;
-    background-color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 80%;
+  border: 2px solid #0557fa;
+  transition: border-color 0.3s;
 }
 
-.search-bar input::placeholder {
-    color: #0557fa;
-    font-weight: 100;
-}
-
-/* Style for the input when it is focused (clicked) */
-.search-bar input:focus {
-    border-color: #0557fa;
-    color: #0557fa;
-    outline: none;
-}
-
-.my-events-button {
-    background-color: #0557fa;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    margin-right: 5px;
-    border: 2px solid #0557fa;
-    font-size: medium;
-
-}
-
+.my-events-button,
 .create-event-button {
-    background-color: #0557fa;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    margin-right: 30px;
-    border: 2px solid #0557fa;
-    text-decoration: none;
-    font-size: medium;
+  background: linear-gradient(to right, #0557fa, #0575fa);
+  color: white;
+  padding: 10px 25px;
+  border-radius: 25px;
+  border: none;
+  font-size: 16px;
+  margin-right: 10px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .create-event-button:hover,
 .my-events-button:hover {
-    border: 2px solid black;
+  background: linear-gradient(to right, #0575fa, #0557fa);
 }

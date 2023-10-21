@@ -51,6 +51,7 @@ function ForumFeed({ selectedTag }) {
             content: data.description,
             images: data.images,
             votes: data.votes,
+            createdAt: data.createdAt.toDate(),
           });
         });
         setForumPosts(postsData);
@@ -61,6 +62,21 @@ function ForumFeed({ selectedTag }) {
 
     fetchData();
   }, [selectedTag]);
+
+  function timeAgo(date) {
+    const now = new Date();
+    const differenceInSeconds = (now - date) / 1000;
+
+    if (differenceInSeconds < 3600) {
+      // less than an hour
+      return `${Math.round(differenceInSeconds / 60)} minutes ago`;
+    } else if (differenceInSeconds < 86400) {
+      // less than a day
+      return `${Math.round(differenceInSeconds / 3600)} hours ago`;
+    } else {
+      return `${Math.round(differenceInSeconds / 86400)} days ago`;
+    }
+  }
 
   // Removed the extra filteredPosts logic
 
@@ -104,6 +120,8 @@ function ForumFeed({ selectedTag }) {
         forumPosts.map((post) => (
           <div key={post.id} className="forum-post">
             <h2 className="post-title">{post.title}</h2>
+            <span className="time-ago">{timeAgo(post.createdAt)}</span>
+
             {post.content && <p className="post-content">{post.content}</p>}
             <div className="images-container">
               {post.images &&

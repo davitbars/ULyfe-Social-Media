@@ -4,7 +4,6 @@ import ForumLogo from "../../images/ForumLogo2.png";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
-
 function SecondaryHeader({ onCreatePostClick }) {
   return (
     <div className="secondary-header">
@@ -16,10 +15,11 @@ function SecondaryHeader({ onCreatePostClick }) {
       <div className="search-bar">
         <input type="text" placeholder="Search Forums"></input>
       </div>
-      <button className="my-chats-button">My Chats</button>
+      {/* <button className="my-chats-button">My Chats</button> */}
       <Link to="#" className="create-post-button" onClick={onCreatePostClick}>
         <FaPlus />
-      </Link>    </div>
+      </Link>{" "}
+    </div>
   );
 }
 
