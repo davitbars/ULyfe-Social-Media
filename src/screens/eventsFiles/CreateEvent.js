@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./CreateEvent.css"; // Import the CSS file for styling
-import { addEvent } from "../../firebaseFunctions"; // Import your Firebase function
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-
+import "./CreateEvent.css";
+import { addEvent } from "../../firebaseFunctions";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase";
 const CreateEvent = ({ onCancel }) => {
   const [formData, setFormData] = useState({
     title: "",
@@ -30,6 +30,7 @@ const CreateEvent = ({ onCancel }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const userUID = auth.currentUser ? auth.currentUser.uid : null;
 
     try {
       // Ensure required fields are filled out
@@ -60,6 +61,7 @@ const CreateEvent = ({ onCancel }) => {
         thumbnail: images[0], // Include the thumbnail image (first image in the array)
         images: images.slice(1),
         type: formData.type,
+        uid: userUID,
         // Exclude the thumbnail from the images array
       });
 

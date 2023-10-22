@@ -13,17 +13,37 @@ function Events() {
   const [selectedEvent, setSelectedEvent] = useState(0);
   const [showCreateEvent, setShowCreateEvent] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState({
-    price: [],
-    location: [],
-    eventType: [],
+    price: "",
+    location: "",
+    eventType: "",
   });
+
+  const isPriceInRange = (price, range) => {
+    const numPrice = parseInt(price, 10);
+
+    if (isNaN(numPrice)) return false; // handle non-numeric prices
+
+    switch (range) {
+      case "Free":
+        return numPrice === 0;
+      case "0-15":
+        return numPrice >= 0 && numPrice <= 15;
+      case "16-25":
+        return numPrice >= 16 && numPrice <= 25;
+      case "26+":
+        return numPrice >= 26;
+      default:
+        return true; // handle any unexpected range value
+    }
+  };
 
   const filteredEvents = events.filter((event) => {
     return (
-      (selectedFilters.price.length === 0 ||
-        selectedFilters.price.includes(event.price)) &&
-      (selectedFilters.location.length === 0 ||
-        selectedFilters.location.includes(event.location))
+      (!selectedFilters.price ||
+        isPriceInRange(event.price, selectedFilters.price)) &&
+      (!selectedFilters.location ||
+        selectedFilters.location === event.location) &&
+      (!selectedFilters.eventType || selectedFilters.eventType === event.type)
     );
   });
 
@@ -45,6 +65,7 @@ function Events() {
             description: data.description,
             images: data.images,
             time: data.time,
+            type: data.type,
           });
         });
         events.sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -81,9 +102,7 @@ function Events() {
         />
         <div className="events-container">
           <div className="event-list">
-            {events.map((
-              event // Use the 'events' state variable here
-            ) => (
+            {filteredEvents.map((event) => (
               <EventCard
                 key={event.id}
                 event={event}

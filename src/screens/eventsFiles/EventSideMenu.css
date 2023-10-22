@@ -22,3 +22,23 @@
 .filter-category li {
   margin: 5px 0;
 }
+.event-side-menu button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: white !important; /* Using !important to ensure this style takes precedence */
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.event-side-menu button:hover {
+  background-color: #0056b3;
+}
+
+.event-side-menu button i {
+  margin-right: 5px;
+}

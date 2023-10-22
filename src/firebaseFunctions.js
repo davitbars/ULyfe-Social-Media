@@ -93,6 +93,8 @@ export const addEvent = async (eventData) => {
       thumbnail: thumbnailUrl,
       images: imageUrls,
       createdAt: serverTimestamp(),
+      uid: eventData.uid,
+      type: eventData.type,
     });
 
     return newEventRef.id;
