@@ -3,12 +3,11 @@ import "./CreatePost.css";
 import { addForumPost } from "../../firebaseFunctions";
 import { useNavigate } from "react-router-dom";
 import { FaRegArrowAltCircleLeft } from "react-icons/fa";
-import { auth } from "../../firebase"; 
+import { auth } from "../../firebase";
 import Select from "react-select";
 
 const CreatePost = ({ onCancel }) => {
   const [formData, setFormData] = useState({
-    
     forumTitle: "",
     description: "",
     tags: [],
@@ -19,7 +18,7 @@ const CreatePost = ({ onCancel }) => {
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
   const userId = auth.currentUser ? auth.currentUser.uid : null;
-  
+
   const tagOptions = [
     // General
     { value: "professors", label: "Professors" },
@@ -28,12 +27,12 @@ const CreatePost = ({ onCancel }) => {
     { value: "clubs", label: "Clubs" },
     { value: "restaurants", label: "Restaurants" },
     { value: "frats-sororities", label: "Frats/Sororities" },
-  
+
     // Academics
     { value: "study-tips", label: "Study Tips" },
     { value: "internships", label: "Internships" },
     { value: "academic-challenges", label: "Academic Challenges" },
-  
+
     // Campus Life
     { value: "campus-events", label: "Campus Events" },
     { value: "roommate-issues", label: "Roommate Issues" },
@@ -41,29 +40,29 @@ const CreatePost = ({ onCancel }) => {
     { value: "student-organizations", label: "Student Organizations" },
     { value: "sports-athletics", label: "Sports and Athletics" },
     { value: "campus-safety", label: "Campus Safety" },
-  
+
     // Wellness
     { value: "mental-health", label: "Mental Health" },
     { value: "fitness-health", label: "Fitness and Health" },
-  
+
     // Finance
     { value: "part-time-jobs", label: "Part-Time Jobs" },
     { value: "student-loans", label: "Student Loans" },
     { value: "student-discounts", label: "Student Discounts" },
     { value: "student-budgeting", label: "Student Budgeting" },
-  
+
     // Student Life
     { value: "international-students", label: "International Students" },
     { value: "student-housing", label: "Student Housing" },
-  
+
     // Experiences
     { value: "travel-adventure", label: "Travel and Adventure" },
     { value: "alumni-stories", label: "Alumni Stories" },
-  
+
     // Creativity
     { value: "art-creativity", label: "Art and Creativity" },
     { value: "lgbtq-support", label: "LGBTQ+ Support" },
-  
+
     // Tech & Gadgets
     { value: "technology-gadgets", label: "Technology and Gadgets" },
   ];
@@ -111,7 +110,7 @@ const CreatePost = ({ onCancel }) => {
         return;
       }
 
-      const postId = await addForumPost(userId, {
+      await addForumPost(userId, {
         forumTitle: formData.forumTitle,
         description: formData.description,
         tags: formData.tags,
@@ -175,21 +174,21 @@ const CreatePost = ({ onCancel }) => {
           />
         </div>
         <div className="input-group">
-        <label>Tags:</label>
-        <div>
-          <Select
-            name="tags"
-            value={tagOptions.filter((option) =>
-              formData.tags.includes(option.value)
-            )}
-            options={tagOptions}
-            onChange={handleTagChange}
-            isMulti 
-            className="input-field"
-            menuPosition="fixed"
-          />
+          <label>Tags:</label>
+          <div >
+            <Select
+              name="tags"
+              value={tagOptions.filter((option) =>
+                formData.tags.includes(option.value)
+              )}
+              options={tagOptions}
+              onChange={handleTagChange}
+              isMulti
+              className="input-field"
+              menuPosition="fixed"
+            />
+          </div>
         </div>
-      </div>
         <button type="submit" className="submit-button">
           Create Post
         </button>

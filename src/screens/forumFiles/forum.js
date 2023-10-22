@@ -75,9 +75,6 @@ function Forum() {
           <RightSideSection />
         </div> 
       </div>
-      {!showCreatePost && !showMyPosts && (
-        <button onClick={handleCreatePostClick}>Create Post</button>
-      )}
     </div>
   );
 }

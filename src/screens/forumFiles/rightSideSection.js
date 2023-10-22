@@ -8,7 +8,7 @@ import {
   limit,
   onSnapshot,
 } from "firebase/firestore";
-import { faHeart, faStickyNote } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
@@ -105,7 +105,7 @@ function RightSideSection() {
                 {tagData.tag}
               </strong>
               <strong>
-                 {tagData.count} #{/*<FontAwesomeIcon icon={faStickyNote} /> */}
+                 {tagData.count} #
               </strong>
             </li>
           ))}

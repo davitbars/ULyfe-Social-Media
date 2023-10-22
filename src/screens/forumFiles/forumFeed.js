@@ -17,7 +17,6 @@ import {
   faThumbsUp,
   faThumbsDown,
   faCommentAlt,
-  faShareSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { increment } from "firebase/firestore";
 import { auth } from "../../firebase";
@@ -45,13 +44,16 @@ function ForumFeed({ selectedTag }) {
         const postsData = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
+          const createdAt = data.createdAt;
+          const createdAtDate = createdAt ? createdAt.toDate() : null;
+          
           postsData.push({
             id: doc.id,
             title: data.forumTitle,
             content: data.description,
             images: data.images,
             votes: data.votes,
-            createdAt: data.createdAt.toDate(),
+            createdAt: createdAtDate,
             tags: data.tags,
           });
         });
@@ -79,9 +81,6 @@ function ForumFeed({ selectedTag }) {
     }
   }
 
-  // Removed the extra filteredPosts logic
-
-
   const vote = async (postId, change) => {
     const postRef = doc(db, "forumPosts", postId);
     const postSnapshot = await getDoc(postRef);
@@ -104,10 +103,6 @@ function ForumFeed({ selectedTag }) {
     } else {
       setSelectedPostId(postId);
     }
-  };
-
-  const share = (postId, title) => {
-    // Your share functionality here
   };
 
   return (

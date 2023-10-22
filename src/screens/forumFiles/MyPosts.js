@@ -97,10 +97,6 @@ function MyPosts({ userId }) {
     }
   };
 
-  const share = (postId, title) => {
-    // Your share functionality here
-  };
-
   return (
     <div className="forum-feed">
       {forumPosts.length === 0 ? (

@@ -4,7 +4,6 @@ import { db, auth } from '../../firebase';
 import "./swiping.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUndo, faHeart, faTimes, faStar, faComment } from '@fortawesome/free-solid-svg-icons';
-import Filters from './Filters';
 
 const Swiping = ({ currentProfileUid, setCurrentProfileUid, filters, profilesAvailable, setProfilesAvailable }) => {
   const [profiles, setProfiles] = useState([]);
