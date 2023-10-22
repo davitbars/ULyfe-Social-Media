@@ -14,7 +14,9 @@ const CreateEvent = ({ onCancel }) => {
     type: "",
   });
 
+  const [thumbnail, setThumbnail] = useState(null); // Separate state for thumbnail
   const [images, setImages] = useState([]); // Separate state for images
+
   const navigate = useNavigate(); // Get the navigate function
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
@@ -24,8 +26,13 @@ const CreateEvent = ({ onCancel }) => {
   };
 
   const handleImageChange = (e) => {
-    const selectedImages = Array.from(e.target.files);
-    setImages(selectedImages);
+    if (e.target.name === "thumbnail") {
+      const selectedThumbnail = e.target.files[0];
+      setThumbnail(selectedThumbnail);
+    } else if (e.target.name === "images") {
+      const selectedImages = Array.from(e.target.files);
+      setImages(selectedImages);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -58,8 +65,8 @@ const CreateEvent = ({ onCancel }) => {
         time: formData.time,
         location: formData.location,
         price: formData.price,
-        thumbnail: images[0], // Include the thumbnail image (first image in the array)
-        images: images.slice(1),
+        thumbnail: thumbnail, // Include the thumbnail image (first image in the array)
+        images: images,
         type: formData.type,
         uid: userUID,
         // Exclude the thumbnail from the images array

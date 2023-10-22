@@ -4,17 +4,20 @@ import "./EventDetails.css";
 
 function EventDetails({ event, onClose }) {
   const [showImageOverlay, setShowImageOverlay] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0); // New state
 
-  const images = event
-    ? event.images.map((image, index) => ({
-        original: image,
-        thumbnail: image,
-        originalWidth: 200,
-        originalHeight: 200,
-      }))
-    : [];
+  const images =
+    event && event.images
+      ? event.images.map((image, index) => ({
+          original: image,
+          thumbnail: image,
+          originalWidth: 200,
+          originalHeight: 200,
+        }))
+      : [];
 
-  const openImageOverlay = () => {
+  const openImageOverlay = (index) => {
+    console.log("Image clicked with index:", selectedImageIndex);
     setShowImageOverlay(true);
   };
 
@@ -30,10 +33,17 @@ function EventDetails({ event, onClose }) {
     <div className="event-details-container">
       <h2>{event.title}</h2>
 
-      <Gallery items={images} onClick={openImageOverlay} />
+      <Gallery
+        items={images}
+        onSlide={(index) => setSelectedImageIndex(index)}
+        onClick={openImageOverlay}
+      />
 
       <div className="data-box">
-        <p className="eventDate">Date: {event.date}</p>
+        <p className="eventDate">
+          Date: {event.date ? new Date(event.date).toLocaleDateString() : ""}
+        </p>
+
         <p className="eventPrice">Price: ${event.price}</p>
         <p className="eventLocation">Location: {event.location}</p>
         <p className="eventDescription">Description: {event.description}</p>
@@ -41,7 +51,9 @@ function EventDetails({ event, onClose }) {
 
       {showImageOverlay && (
         <div className="image-overlay" onClick={closeImageOverlay}>
-          <img src={images[0].original} alt={event.title} />
+          {selectedImageIndex < images.length ? (
+            <img src={images[selectedImageIndex].original} alt={event.title} />
+          ) : null}
         </div>
       )}
     </div>

@@ -4,18 +4,32 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUndo } from "@fortawesome/free-solid-svg-icons";
 
 function EventSideMenu({ selectedFilters, setSelectedFilters }) {
+  // const currentValues = selectedFilters[category] || [];
+
   const handleFilterChange = (category, value) => {
-    setSelectedFilters((prevFilters) => ({
-      ...prevFilters,
-      [category]: value,
-    }));
+    setSelectedFilters((prevFilters) => {
+      const currentValues = prevFilters[category] || [];
+      if (currentValues.includes(value)) {
+        // If already selected, remove the filter
+        return {
+          ...prevFilters,
+          [category]: currentValues.filter((item) => item !== value),
+        };
+      } else {
+        // Otherwise, add the new filter
+        return {
+          ...prevFilters,
+          [category]: [...currentValues, value],
+        };
+      }
+    });
   };
 
   const resetFilters = () => {
     setSelectedFilters({
-      price: "",
-      location: "",
-      eventType: "",
+      price: [],
+      location: [],
+      eventType: [],
     });
   };
 
@@ -27,11 +41,11 @@ function EventSideMenu({ selectedFilters, setSelectedFilters }) {
           <li>
             <label>
               <input
-                type="radio"
+                type="checkbox"
                 name="price"
                 value="Free"
                 onChange={() => handleFilterChange("price", "Free")}
-                checked={selectedFilters.price === "Free"}
+                checked={selectedFilters.price.includes("Free")}
               />
               Free
             </label>
@@ -39,23 +53,23 @@ function EventSideMenu({ selectedFilters, setSelectedFilters }) {
           <li>
             <label>
               <input
-                type="radio"
+                type="checkbox"
                 name="price"
-                value="0-15"
-                onChange={() => handleFilterChange("price", "0-15")}
-                checked={selectedFilters.price === "0-15"}
+                value="1-15"
+                onChange={() => handleFilterChange("price", "1-15")}
+                checked={selectedFilters.price.includes("1-15")}
               />
-              0-15
+              1-15
             </label>
           </li>
           <li>
             <label>
               <input
-                type="radio"
+                type="checkbox"
                 name="price"
                 value="16-25"
                 onChange={() => handleFilterChange("price", "16-25")}
-                checked={selectedFilters.price === "16-25"}
+                checked={selectedFilters.price.includes("16-25")}
               />
               16-25
             </label>
@@ -63,11 +77,11 @@ function EventSideMenu({ selectedFilters, setSelectedFilters }) {
           <li>
             <label>
               <input
-                type="radio"
+                type="checkbox"
                 name="price"
                 value="26+"
                 onChange={() => handleFilterChange("price", "26+")}
-                checked={selectedFilters.price === "26+"}
+                checked={selectedFilters.price.includes("26+")}
               />
               26+
             </label>
@@ -81,11 +95,11 @@ function EventSideMenu({ selectedFilters, setSelectedFilters }) {
           <li>
             <label>
               <input
-                type="radio"
+                type="checkbox"
                 name="location"
                 value="on campus"
                 onChange={() => handleFilterChange("location", "on campus")}
-                checked={selectedFilters.location === "on campus"}
+                checked={selectedFilters.location.includes("on campus")}
               />
               On Campus
             </label>
@@ -93,11 +107,11 @@ function EventSideMenu({ selectedFilters, setSelectedFilters }) {
           <li>
             <label>
               <input
-                type="radio"
+                type="checkbox"
                 name="location"
                 value="off campus"
                 onChange={() => handleFilterChange("location", "off campus")}
-                checked={selectedFilters.location === "off campus"}
+                checked={selectedFilters.location.includes("off campus")}
               />
               Off Campus
             </label>
@@ -111,11 +125,11 @@ function EventSideMenu({ selectedFilters, setSelectedFilters }) {
           <li>
             <label>
               <input
-                type="radio"
+                type="checkbox"
                 name="eventType"
                 value="party"
                 onChange={() => handleFilterChange("eventType", "party")}
-                checked={selectedFilters.eventType === "party"}
+                checked={selectedFilters.eventType.includes("party")}
               />
               Party
             </label>
@@ -123,11 +137,11 @@ function EventSideMenu({ selectedFilters, setSelectedFilters }) {
           <li>
             <label>
               <input
-                type="radio"
+                type="checkbox"
                 name="eventType"
                 value="clubs"
                 onChange={() => handleFilterChange("eventType", "clubs")}
-                checked={selectedFilters.eventType === "clubs"}
+                checked={selectedFilters.eventType.includes("clubs")}
               />
               Clubs
             </label>
@@ -135,11 +149,11 @@ function EventSideMenu({ selectedFilters, setSelectedFilters }) {
           <li>
             <label>
               <input
-                type="radio"
+                type="checkbox"
                 name="eventType"
                 value="school"
                 onChange={() => handleFilterChange("eventType", "school")}
-                checked={selectedFilters.eventType === "school"}
+                checked={selectedFilters.eventType.includes("school")}
               />
               School
             </label>
@@ -147,11 +161,11 @@ function EventSideMenu({ selectedFilters, setSelectedFilters }) {
           <li>
             <label>
               <input
-                type="radio"
+                type="checkbox"
                 name="eventType"
                 value="other"
                 onChange={() => handleFilterChange("eventType", "other")}
-                checked={selectedFilters.eventType === "other"}
+                checked={selectedFilters.eventType.includes("other")}
               />
               Other
             </label>

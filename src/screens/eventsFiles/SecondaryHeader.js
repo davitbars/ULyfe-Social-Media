@@ -1,9 +1,10 @@
-import React from 'react';
-import './SecondaryHeader.css';
-import { Link } from 'react-router-dom';
-import { FaCalendarPlus } from 'react-icons/fa';
+import React from "react";
+import "./SecondaryHeader.css";
+import { Link } from "react-router-dom";
+import { FaCalendarPlus } from "react-icons/fa";
 
-function SecondaryHeader({ onCreateEventClick }) { // Receive onCreateEventClick as a prop
+function SecondaryHeader({ onCreateEventClick, onMyEventsClick }) {
+  // Added onMyEventsClick here
   return (
     <div className="secondary-header">
       <link
@@ -13,8 +14,10 @@ function SecondaryHeader({ onCreateEventClick }) { // Receive onCreateEventClick
       <div className="search-bar">
         <input type="text" placeholder="Search Forums"></input>
       </div>
-      <button className="my-events-button">My Events</button>
-      <Link to="#" className="create-event-button" onClick={onCreateEventClick}> {/* Call the prop function onClick */}
+      <Link to="#" className="my-events-button" onClick={onMyEventsClick}>
+        My Events
+      </Link>
+      <Link to="#" className="create-event-button" onClick={onCreateEventClick}>
         <FaCalendarPlus />
       </Link>
     </div>
