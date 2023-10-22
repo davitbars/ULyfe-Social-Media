@@ -3,21 +3,70 @@ import "./CreatePost.css";
 import { addForumPost } from "../../firebaseFunctions";
 import { useNavigate } from "react-router-dom";
 import { FaRegArrowAltCircleLeft } from "react-icons/fa";
-import { auth } from "../../firebase"; // Import the authentication module
+import { auth } from "../../firebase"; 
+import Select from "react-select";
 
 const CreatePost = ({ onCancel }) => {
   const [formData, setFormData] = useState({
+    
     forumTitle: "",
     description: "",
-    tags: "",
+    tags: [],
   });
 
   const [images, setImages] = useState([]);
   const navigate = useNavigate();
   const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
-  // Get the current user's ID if available, or set it to null if not logged in
   const userId = auth.currentUser ? auth.currentUser.uid : null;
+  
+  const tagOptions = [
+    // General
+    { value: "professors", label: "Professors" },
+    { value: "classes", label: "Classes" },
+    { value: "majors", label: "Majors" },
+    { value: "clubs", label: "Clubs" },
+    { value: "restaurants", label: "Restaurants" },
+    { value: "frats-sororities", label: "Frats/Sororities" },
+  
+    // Academics
+    { value: "study-tips", label: "Study Tips" },
+    { value: "internships", label: "Internships" },
+    { value: "academic-challenges", label: "Academic Challenges" },
+  
+    // Campus Life
+    { value: "campus-events", label: "Campus Events" },
+    { value: "roommate-issues", label: "Roommate Issues" },
+    { value: "dorm-life", label: "Dorm Life" },
+    { value: "student-organizations", label: "Student Organizations" },
+    { value: "sports-athletics", label: "Sports and Athletics" },
+    { value: "campus-safety", label: "Campus Safety" },
+  
+    // Wellness
+    { value: "mental-health", label: "Mental Health" },
+    { value: "fitness-health", label: "Fitness and Health" },
+  
+    // Finance
+    { value: "part-time-jobs", label: "Part-Time Jobs" },
+    { value: "student-loans", label: "Student Loans" },
+    { value: "student-discounts", label: "Student Discounts" },
+    { value: "student-budgeting", label: "Student Budgeting" },
+  
+    // Student Life
+    { value: "international-students", label: "International Students" },
+    { value: "student-housing", label: "Student Housing" },
+  
+    // Experiences
+    { value: "travel-adventure", label: "Travel and Adventure" },
+    { value: "alumni-stories", label: "Alumni Stories" },
+  
+    // Creativity
+    { value: "art-creativity", label: "Art and Creativity" },
+    { value: "lgbtq-support", label: "LGBTQ+ Support" },
+  
+    // Tech & Gadgets
+    { value: "technology-gadgets", label: "Technology and Gadgets" },
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +84,11 @@ const CreatePost = ({ onCancel }) => {
     } else {
       navigate("/screens/forum");
     }
+  };
+
+  const handleTagChange = (selectedTags) => {
+    const tagValues = selectedTags ? selectedTags.map((tag) => tag.value) : [];
+    setFormData({ ...formData, tags: tagValues });
   };
 
   const handleSubmit = async (e) => {
@@ -99,9 +153,10 @@ const CreatePost = ({ onCancel }) => {
             required // This field is required
           />
         </div>
-        <div className="input-group">
+        <div className="input-group description">
           <label>Description:</label>
           <textarea
+            rows={4}
             name="description"
             value={formData.description}
             onChange={handleChange}
@@ -120,25 +175,21 @@ const CreatePost = ({ onCancel }) => {
           />
         </div>
         <div className="input-group">
-          <label>Tags:</label>
-          <select
+        <label>Tags:</label>
+        <div>
+          <Select
             name="tags"
-            value={formData.tags}
-            onChange={handleChange}
+            value={tagOptions.filter((option) =>
+              formData.tags.includes(option.value)
+            )}
+            options={tagOptions}
+            onChange={handleTagChange}
+            isMulti 
             className="input-field"
-            required
-          >
-            <option value="">Select a tag...</option>
-            <option value="general">General</option>
-            <option value="professors">Professors</option>
-            <option value="classes">Classes</option>
-            <option value="majors">Majors</option>
-            <option value="clubs">Clubs</option>
-            <option value="restaurants">Restaurants</option>
-            <option value="frats-sororities">Frats/Sororities</option>
-          </select>
+            menuPosition="fixed"
+          />
         </div>
-
+      </div>
         <button type="submit" className="submit-button">
           Create Post
         </button>

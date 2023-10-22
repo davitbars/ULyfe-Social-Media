@@ -1,11 +1,12 @@
 .forum {
   background-color: white;
-  overflow: hidden;
+  position: relative;
 }
 
 .forum-main-content {
   display: flex;
   flex-direction: row;
+  gap: 2.5%;
 }
 
 .side-menu {
@@ -14,13 +15,20 @@
   overflow-y: auto;
 }
 
+.right-side-section {
+  flex: 0 0 25%;
+  height: 100vh;
+  overflow-y: auto;
+}
+
 .forum-content {
-  flex: 0 0 60%;;
+  flex: 0 0 50%;
   padding: 20px;
   overflow-y: scroll;
   scrollbar-width: thin;
   scrollbar-color: #ccc transparent;
   padding-top: 0;
+  height: calc(100vh - 145px);
 }
 
 /* Customize the appearance of the scrollbar thumb */

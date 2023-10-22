@@ -1,5 +1,4 @@
 .side-menu-box {
-  padding-top: 60px;
   padding-bottom: 60px;
   height: calc(100vh + 145px);
   padding-left: 60px;
@@ -15,6 +14,14 @@
   font-weight: 600;
   font-size: 22px;
   margin-top: 8px;
+}
+
+.home {
+  color: #0557fa;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
 }
 
 .category-content:hover {
@@ -41,7 +48,6 @@
   list-style-type: none;
   padding: 0;
   margin: 0 0 0 10px;
-  color: #0557fa;
   display: none; /* Hide subcategories by default */
 }
 
@@ -54,13 +60,36 @@
   cursor: pointer;
   font-size: 20px;
   font-weight: 400;
-  color: #0557fa;
+  color: black;
+  margin-top: 5px;
 }
 
-.sub-tag:hover {
+.sub-tag:hover,
+.sub-tag.active {
   color: darkblue;
 }
 
 .tags-container {
   margin-left: 25px;
+}
+
+.icon-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.category-title {
+  text-align: left;
+}
+
+.category-icon {
+  width: 22px;
+}
+
+.sub-tag.active {
+  color: darkblue;
+  font-weight: 600;
 }

@@ -34,13 +34,11 @@
 }
 
 .images-container {
-  width: 100%;
   display: flex;
   flex-direction: row;
-  overflow: scroll;
+  margin-bottom: 20px;
+  overflow-x: scroll;
 }
-
-/* Style for the post actions */
 
 .post-actions {
   position: absolute;

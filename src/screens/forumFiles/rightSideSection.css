@@ -1,28 +1,57 @@
 .right-side-section-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    border: 2px solid #0073e6;
-    padding: 10px;
-    height: 70vh;
+    background-color: #f7f7f7;
+    padding-right: 60px;
+    border-radius: 5px;
+    margin-top: 20px;
 }
 
-.trending-talks {
-    margin-bottom: 30px;
-    border: 2px solid #0073e6;
-    border-radius: 10px;
-}
-
-.trending-talks ul{
-    list-style-type: none;
-    padding: 5px;
+.trending-talks,
+.trending-tags,
+.advertisement {
     margin-bottom: 20px;
 }
 
-.advertisement {
-    align-self: flex-end;
-    margin-top: auto;
-    width: 100%;
+.trending-talks h2,
+.trending-tags h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #0557fa;
+}
+
+.trending-talks ul,
+.trending-tags ul {
+    list-style: none;
+    padding: 0;
+}
+
+.trending-talks li,
+.trending-tags li {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.trending-tags li {
+    font-weight: bold;
+}
+
+.advertisement img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.advertisement p {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 5px;
+    color: #777;
+}
+
+.heart-icon {
+    color: red;
 }

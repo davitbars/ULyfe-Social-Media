@@ -17,12 +17,11 @@ import {
   faThumbsUp,
   faThumbsDown,
   faCommentAlt,
-  faShareSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { increment } from "firebase/firestore";
 import { auth } from "../../firebase";
 
-function ForumFeed({ selectedTag }) {
+function MyPosts({ userId }) {
   const [forumPosts, setForumPosts] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState(null);
 
@@ -30,16 +29,11 @@ function ForumFeed({ selectedTag }) {
     const fetchData = () => {
       const forumPostsCollection = collection(db, "forumPosts");
 
-      let q;
-      if (selectedTag) {
-        q = query(
-          forumPostsCollection,
-          where("tags", "array-contains", selectedTag),
-          orderBy("createdAt", "desc")
-        );
-      } else {
-        q = query(forumPostsCollection, orderBy("createdAt", "desc"));
-      }
+      const q = query(
+        forumPostsCollection,
+        where("userId", "==", userId), // Filter by user's ID
+        orderBy("createdAt", "desc")
+      );
 
       const unsubscribe = onSnapshot(q, (querySnapshot) => {
         const postsData = [];
@@ -62,7 +56,7 @@ function ForumFeed({ selectedTag }) {
     };
 
     fetchData();
-  }, [selectedTag]);
+  }, [userId]);
 
   function timeAgo(date) {
     const now = new Date();
@@ -78,9 +72,6 @@ function ForumFeed({ selectedTag }) {
       return `${Math.round(differenceInSeconds / 86400)} days ago`;
     }
   }
-
-  // Removed the extra filteredPosts logic
-
 
   const vote = async (postId, change) => {
     const postRef = doc(db, "forumPosts", postId);
@@ -114,7 +105,7 @@ function ForumFeed({ selectedTag }) {
     <div className="forum-feed">
       {forumPosts.length === 0 ? (
         <div className="no-posts-message">
-          No posts made to {selectedTag} yet.
+          You have not made any posts yet.
         </div>
       ) : (
         forumPosts.map((post) => (
@@ -187,4 +178,4 @@ function ForumFeed({ selectedTag }) {
   );
 }
 
-export default ForumFeed;
+export default MyPosts;

@@ -15,8 +15,8 @@ import {
   faCaretLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
-function SideMenu({ setSelectedTag, selectedTag }) {
-  const [categories, setCategories] = useState([
+function SideMenu({ setSelectedTag, selectedTag, closePosts  }) {
+  const [categories] = useState([
     {
       name: "General",
       icon: faGraduationCap,
@@ -113,9 +113,13 @@ function SideMenu({ setSelectedTag, selectedTag }) {
 
   const handleTagClick = (tag) => {
     setSelectedTag(tag);
+    closePosts()
   };
   return (
     <div className="side-menu-box">
+      <div className="home" onClick={() => handleTagClick(null)}>
+        Home
+      </div>
       {categories.map((category, index) => (
         <div key={index}>
           <div className="category-header">
@@ -124,11 +128,13 @@ function SideMenu({ setSelectedTag, selectedTag }) {
               onClick={() => handleCategoryClick(category.name)}
             >
               <div className="category-content">
-                <FontAwesomeIcon
-                  icon={category.icon}
-                  className="category-icon"
-                />
-                <div className="category-title">{category.name}</div>
+                <div className="icon-title">
+                  <FontAwesomeIcon
+                    icon={category.icon}
+                    className="category-icon"
+                  />
+                  <div className="category-title">{category.name}</div>
+                </div>
                 <div className="category-caret-icon">
                   {category.name === openCategory ? (
                     <FontAwesomeIcon icon={faCaretDown} />
